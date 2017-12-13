@@ -14,6 +14,8 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# define TRUE 1
+# define FALSE 0
 # define MAX_SCHAR 127
 # define MIN_SCHAR -128
 # define MAX_UCHAR 255
@@ -23,6 +25,7 @@
 # define MIN_SI64 -9223372036854775807
 # define MAX_SI64 9223372036854775807
 # define MAX_UI64 18446744073709551615 
+
 
 /*
 **	  This function returns the absolute

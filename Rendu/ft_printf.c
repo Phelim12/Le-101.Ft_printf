@@ -14,111 +14,83 @@
 # include "ft_printf.h"
 # include <stdio.h>
 
-int		ft_arg_c(const char *str, va_list ap, int ret)
+void	ft_arg_modifiy(char *size_type, char *type)
 {
-	unsigned char 	u;
-	char			c;
-
-	str += ret;
-	if (*str == 'u')
-		u = (unsigned char)va_arg(ap, unsigned int);
-	else if (*str == 'd' || *str == 'i' || *str == 'o' || *str == 'x' 
-		|| *str == 'X' || *str == 'c')
-		c = (char)va_arg(ap, int);
-	else
-		return (0);
-	if (*str == 'c')
-		ft_putchar(c);
-	if (*str == 'i' || *str == 'd')
-		ft_putnbr(c);
-	if (*str == 'u')
-		ft_putnbr(u);
-	if (*str == 'o')
-		ft_putnbr_base(c, "01234567");
-	if (*str == 'x')
-		ft_putnbr_base(c, "0123456789abcdef");
-	if (*str == 'X')
-		ft_putnbr_base(c, "0123456789ABCDEF");
-	str++;
-	return (ret + 1);
+	*size_type = 'l';
+	*type += 32;
 }
 
-int		ft_check_type(const char *str, va_list ap)
+void	ft_arg_char(va_list ap, t_type *all_type, char type)
 {
-	int ret;
-
-	ret = 0;
-	if (*str == 'c')
-		ret = ft_arg_c(str, ap, 0);
-	else if (*str == 'd' || *str == 'i' || *str == 'o' || *str == 'u' ||
-	 *str == 'x' || *str == 'X')
-		ret = ft_arg_d(str, ap, 0);
-	return (ret);
+	if (type == 'C')
+		all_type->wc = (wchar_t)va_arg(ap, int);
+	if (type == 'u')
+		all_type->ud = (uintmax_t)va_arg(ap, int);
+	if (ft_strchr("cdioxX", type))
+		all_type->c = (char)va_arg(ap, int);
 }
 
-int		ft_arg_d(const char *str, va_list ap, int ret)
+void	ft_arg_str(va_list ap, t_type *all_type, char type)
 {
-	long long int d;
-	unsigned long long int u;	
-
-	str += ret;
-	printf("%c\n", *(str - 1));
-	if (*(str - 1) == 'j' && *str != 'u')
-		d = (long long int)va_arg(ap, intmax_t);
-	else if (*(str - 1) == 'j' && *str == 'u')
-		d = (long long int)va_arg(ap, uintmax_t);
-	else if ((ret == 0 || ret == 1) && *str != 'u')
-		d = (long long int)va_arg(ap, int);
-	else if ((ret == 0 || ret == 1) && *str == 'u')
-		d = (long long int)va_arg(ap, unsigned int);
-	else if (ret == 2 && *str != 'u')
-		d = (long long int)va_arg(ap, long long int);
-	else if (ret == 2 && *str == 'u')
-		u = (unsigned long long int)va_arg(ap, unsigned long long int);
-	if (*str == 'd' || *str == 'i' || *str == 'D')
-		ft_putnbr_ll(d);
-	if (*str == 'u' || *str == 'U')
-		ft_putnbr_llu(u);
-	if (*str == 'o' || *str == 'O')
-		ft_putnbr_base_ll(d, "01234567");
-	if (*str == 'x')
-		ft_putnbr_base_ll(d, "0123456789abcdef");
-	if (*str == 'X')
-		ft_putnbr_base_ll(d, "0123456789ABCDEF");
-	return (ret + 1);
-}
-/*
-int		ft_arg_st(const char **str, va_list ap, int ret)
-{
-	
+	if (type == 'S')
+		all_type->wstr = (wchar_t*)va_arg(ap, wchar_t*);
+	if (type == 's')
+		all_type->str = (char*)va_arg(ap, char*);
 }
 
-int		ft_check_type(const char **str, va_list ap, int ret)
+void	ft_arg_ptr(va_list ap, t_type *all_type, char type)
 {
+	return ;
+}
 
-}*/
-
-int		ft_check_size(const char *str, va_list ap)
+void	ft_arg_ll(va_list ap, t_type *all_type, char size_type, char type)
 {
-	int ret;
-	
-	str++;
-	ret = 0;
-	if (*str == 'h' && *(str + 1) == 'h')
-		ret = ft_arg_c(str, ap, 2);
-	else if (*str == 'l' && *(str + 1) == 'l')
-		ret = ft_arg_d(str, ap, 2);
-	else if (*str == 'l')
-		ret = ft_arg_d(str, ap, 1);
-	else if (*str == 'h')
-		ret = ft_arg_d(str, ap, 1);
-	else if (*str == 'j')
-		ret = ft_arg_d(str, ap, 1);
-	/*else if (*str == 'z')
-		ret = ft_arg_st(str, ap, 1);*/
-	else
-		ret = ft_check_type(str, ap);
-	return (ret);
+	if (size_type == 'L' && type == 'u')
+		all_type->ud = (uintmax_t)va_arg(ap, unsigned long long);
+	if (size_type == 'L' && type != 'u')
+		all_type->d = (intmax_t)va_arg(ap, long long);
+	if (size_type == 'j' && type == 'u')
+		all_type->ud = (uintmax_t)va_arg(ap, uintmax_t);
+	if (size_type == 'j' && type != 'u')
+		all_type->d = (intmax_t)va_arg(ap, intmax_t);
+}
+
+void	ft_arg_int(va_list ap, t_type *all_type, char size_type, char type)
+{
+	if (size_type == 'L' || size_type == 'j')
+		ft_arg_ll(ap, all_type, size_type, type);
+	else if (size_type == 'l' && type == 'u')
+		all_type->ud = (uintmax_t)va_arg(ap, unsigned long);
+	else if (size_type == 'l' && type != 'u')
+		all_type->d = (intmax_t)va_arg(ap, long);
+	else if (ft_strchr("diouxX", type))
+		all_type->ud = (uintmax_t)va_arg(ap, unsigned int);
+	else if (size_type == 'z')
+		all_type->ud = (uintmax_t)va_arg(ap, size_t);
+	else 
+		all_type->d = (intmax_t)va_arg(ap, int);
+}
+
+void	ft_search_arg(va_list ap, t_type *all_type, char size_type, char type)
+{
+	if (type == 'D' || type == 'O' || type == 'U')
+		ft_arg_modifiy(&size_type, &type);
+	if (size_type == 'H' || type == 'c' || type == 'C')
+		ft_arg_char(ap, all_type, type);
+	if (type == 's' || type == 'S')
+		ft_arg_str(ap, all_type, type);
+	if (type == 'p')
+		ft_arg_ptr(ap, all_type, type);
+	if (ft_strchr("diouxX", type))
+		ft_arg_int(ap, all_type, size_type, type);
+}
+
+int		ft_print_params(va_list ap, t_params params, char type)
+{
+	t_type all_type;
+
+	ft_search_arg(ap, &all_type, params.size_type, type);
+	return (0);
 }
 
 int		ft_printf(const char *format, ...)
@@ -129,31 +101,31 @@ int		ft_printf(const char *format, ...)
 
 	va_start(ap, format);
 	a = ft_vdprintf(1, format, ap);
+	va_end(ap);
 	return (0);
 }
 
 int 	ft_vdprintf(int fd, const char *format, va_list ap)
 {
-	int		jump;
+	t_params	params;
+	int 		cur;
+	int			ret;
 
-	while (*format)
+	ret = 0;
+	cur = 0;
+	while (format[cur])
 	{
-		jump = 0;
-		if (*format == '%' && *(format + 1) == '%')
+		if (format[cur] == '%')
 		{
-			ft_putchar('%');
-			format += 2;
-		}
-		else if (*format == '%')
-		{
-			if (!(jump = ft_check_size(format, ap)))
-				return (0);
-			format += (jump + 1);
+			while (format[++cur] && !(ft_strchr(PRINTF_TYPE, format[cur])))
+				cur += ft_find_params((char *)(format + cur), &params);
+			ret += ft_print_params(ap, params, format[cur]);
+			//reset_params(&params);
 		}
 		else
-			ft_putchar(*format++);
+			ft_putchar(format[cur++]);
 	}
-	return (0);
+	return (ret);
 }
 
 int main(int argc, char const *argv[])
@@ -162,6 +134,6 @@ int main(int argc, char const *argv[])
 	long long int test = 5559;
 
 	tab = ft_strdup("lldasdfadsf adsf asdfas ");
- 	ft_printf("salut le nom de mon ecole est le %jd ien !\n", test);
+ 	ft_printf("salut je c'est compter jusqu'a %#d\n", 8);
 	return 0;
 }
