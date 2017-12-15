@@ -16,15 +16,15 @@
 void	ft_find_flags(char specs, t_params *ptr)
 {
 	if (specs == '#')
-		ptr->flags_hashtag = TRUE;
+		ptr->flag_hashtag = TRUE;
 	if (specs == '-')
-		ptr->flags_less = TRUE;
+		ptr->flag_less = TRUE;
 	if (specs == '+')
-		ptr->flags_more = TRUE;
+		ptr->flag_more = TRUE;
 	if (specs == ' ')
-		ptr->flags_space = TRUE;
+		ptr->flag_space = TRUE;
 	if (specs == '0')
-		ptr->flags_zero = TRUE;
+		ptr->flag_zero = TRUE;
 }
 
 int		ft_find_width(char *specs, t_params *ptr)
@@ -98,5 +98,7 @@ int		ft_find_params(char *specs, t_params *ptr)
 		ret = ft_find_precision(specs, ptr);
 	else if (ft_strchr("hjlz", *specs))
 		ret = ft_find_size(specs, ptr);
+	if (ptr->flag_zero == TRUE && ptr->flag_less == TRUE)
+		ptr->flag_zero = FALSE;
 	return (ret);
 }

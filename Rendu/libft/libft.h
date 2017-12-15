@@ -25,7 +25,7 @@
 # define MIN_SI64 -9223372036854775807
 # define MAX_SI64 9223372036854775807
 # define MAX_UI64 18446744073709551615 
-
+# define FT_NEG(x) 		((x) < 0)
 
 /*
 **	  This function returns the absolute
@@ -33,6 +33,7 @@
 */
 
 # define ABS(v)		(v < 0 ? -v : v)
+# define FT_ABS(v)	(v < 0 ? -v : v)
 
 # include <string.h>
 # include <stdlib.h>
@@ -85,8 +86,11 @@ int				ft_memcmp(const void *s1, const void *s2, size_t n);
 int				ft_count_words(const char *s, int nb_words, char c);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strequ(char const *s1, char const *s2);
+int				ft_len_base_ll(intmax_t nbr, char *base);
 int				ft_check_base(char *base, int a, int b);
 int				ft_count_len(const char *s, char c);
+int				ft_lenuint_max(uintmax_t n);
+int				ft_lenint_max(intmax_t n);
 int				ft_strlen(const char *s);
 int				ft_atoi(const char *s);
 int				ft_next_sqrt(int nb);
