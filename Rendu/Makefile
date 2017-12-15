@@ -19,11 +19,7 @@ NAME = libftprintf.a
 
 ROOT = ./
 
-DLIBFT = ./libft/
-
-OBJ = $(SRC:.c=.o)
-
-SRC = $(addprefix $(DLIBFT), $(SRC1)) $(addprefix $(ROOT), $(SRC1))
+OBJ = $(SRC1:.c=.o)
 
 SRC1 = 	ft_atoi.c ft_bzero.c ft_count_len.c ft_count_words.c ft_fillstr.c 	\
 		ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_islower.c 	\
@@ -38,19 +34,18 @@ SRC1 = 	ft_atoi.c ft_bzero.c ft_count_len.c ft_count_words.c ft_fillstr.c 	\
 		ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strnew.c 		\
 		ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnstr.c 	\
 		ft_strrchr.c ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c  	\
-		ft_next_sqrt.c ft_putnbr_base.c ft_putnbr_ll.c ft_putnbr_llu.c 		\
-		ft_putnbr_u.c ft_sqrt.c ft_putnbr_base_ll.c ft_putnbr_base_llu.c	\
-		ft_putnbr_base_u.c ft_lenint_max.c ft_lenuint_max.c ft_len_base_ll.c\
-
-SRC2 =	find_params.c ft_printf.c len_arg.c print_arg.c reset.c search_arg.c\
-
+		ft_next_sqrt.c  ft_putnbr_ll.c ft_putnbr_llu.c 		\
+		ft_putnbr_u.c ft_sqrt.c ft_putnbr_base_llu.c ft_len_base_u.c        \
+		ft_putnbr_base_u.c ft_lenint_max.c ft_lenuint_max.c ft_len_base_llu.c\
+		find_params.c ft_printf.c len_arg.c print_arg.c reset.c search_arg.c\
+		print_params.c 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	ar rcs $(NAME) $(addprefix $(DOBJ), $(OBJ))
 
-./%.o: ./%.c
-	$(CC) $(C_FLAGS) -o $@ -c $<
+$(ROOT)%.o: $(ROOT)%.c
+	$(CC) -o $@ -c $<
 
 clean:
 	rm -rf $(OBJ)

@@ -79,5 +79,4 @@ void	ft_search_arg(va_list ap, t_type *all_type, t_params *p, char type)
 		all_type->d = (intmax_t)va_arg(ap, void *);
 		p->new_type = 'x';
 	}
-	p->len_arg = ft_len_arg(*all_type, *p, type);
 }

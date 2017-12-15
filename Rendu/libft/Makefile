@@ -15,17 +15,13 @@ CC = gcc
 
 C_FLAGS = -Wall -Wextra -Werror
 
-NAME = libftprintf.a
+NAME = libft.a
 
 ROOT = ./
 
-DLIBFT = ./libft/
-
 OBJ = $(SRC:.c=.o)
 
-SRC = $(addprefix $(DLIBFT), $(SRC1)) $(addprefix $(ROOT), $(SRC1))
-
-SRC1 = 	ft_atoi.c ft_bzero.c ft_count_len.c ft_count_words.c ft_fillstr.c 	\
+SRC = 	ft_atoi.c ft_bzero.c ft_count_len.c ft_count_words.c ft_fillstr.c 	\
 		ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_islower.c 	\
 		ft_isprint.c ft_isspace.c ft_isupper.c ft_itoa.c ft_lenint.c 		\
 		ft_toupper.c ft_lstiter.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c 	\
@@ -42,14 +38,12 @@ SRC1 = 	ft_atoi.c ft_bzero.c ft_count_len.c ft_count_words.c ft_fillstr.c 	\
 		ft_putnbr_u.c ft_sqrt.c ft_putnbr_base_ll.c ft_putnbr_base_llu.c	\
 		ft_putnbr_base_u.c ft_lenint_max.c ft_lenuint_max.c ft_len_base_ll.c\
 
-SRC2 =	find_params.c ft_printf.c len_arg.c print_arg.c reset.c search_arg.c\
-
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	ar rcs $(NAME) $(addprefix $(DOBJ), $(OBJ))
 
-./%.o: ./%.c
+$(ROOT)%.o: $(ROOT)%.c
 	$(CC) $(C_FLAGS) -o $@ -c $<
 
 clean:

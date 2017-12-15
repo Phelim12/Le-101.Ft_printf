@@ -16,13 +16,13 @@
 int		ft_len_conv(t_type all_type, t_params flags, char type)
 {
 	if (flags.size_type == 'H' && (type == 'x' || type == 'X'))
-		return (ft_len_base_ll((intmax_t)all_type.c, "0123456789ABCDEF"));
+		return (ft_len_base_llu((uintmax_t)all_type.c, "0123456789ABCDEF"));
 	if (flags.size_type == 'H' && (type == 'o' || type == 'O'))
-		return (ft_len_base_ll((intmax_t)all_type.c, "01234567"));
+		return (ft_len_base_llu((uintmax_t)all_type.c, "01234567"));
 	if (type == 'x' || type == 'X')
-		return (ft_len_base_ll(all_type.d, "0123456789ABCDEF"));
+		return (ft_len_base_llu((uintmax_t)all_type.d, "0123456789ABCDEF"));
 	if (type == 'o' || type == 'O')
-		return (ft_len_base_ll(all_type.d, "01234567"));
+		return (ft_len_base_llu((uintmax_t)all_type.d, "01234567"));
 	return (0);
 }
 
@@ -31,20 +31,26 @@ int		ft_len_arg(t_type all_type, t_params flags, char type)
 	int prefix;
 
 	prefix = 0;
+	if (type == '%')
+		return (1);
 	if ((type == 'X' || type == 'x') && flags.flag_hashtag == TRUE)
 		prefix = 2;
 	if ((type == 'O' || type == 'o') && flags.flag_hashtag == TRUE)
 		prefix = 1;
 	//if (type == 'S')
 		//return (ft_wstrlen(all_type.wstr));
-	if (type == 's')
+	if (type == 's' && all_type.str != NULL)
 		return (ft_strlen(all_type.str));
 	if (type == 'c' || type == 'C')
 		return (1);
 	if (ft_strchr("OoXx", type))
 		return ((ft_len_conv(all_type, flags, type)) + prefix);
 	if (ft_strchr("Ddi", type))
+	{
+		if (all_type.d >= 0)
+			return (ft_lenint_max(all_type.d) + 1);
 		return (ft_lenint_max(all_type.d));
+	}
 	if (type == 'U' || type == 'u')
 		return (ft_lenuint_max(all_type.d));
 	return (0);

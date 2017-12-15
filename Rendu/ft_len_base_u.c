@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_putnbr_base_u.c                              .::    .:/ .      .::   */
+/*   ft_len_base_u.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-void	ft_putnbr_base_u(unsigned int nbr, char *base)
+int		ft_len_base_u(unsigned int nbr, char *base)
 {
 	char str[256];
 	int neg;
@@ -30,6 +30,8 @@ void	ft_putnbr_base_u(unsigned int nbr, char *base)
 		b++;
 	}
 	str[b] = '\0';
-	if (ft_check_base(base, 0, 1))
-		ft_print_base(str, neg);
+	if (ft_check_base(base, 0, 1) && neg == -1)
+		return (ft_strlen(str) + 1);
+	else
+		return (ft_strlen(str));
 }

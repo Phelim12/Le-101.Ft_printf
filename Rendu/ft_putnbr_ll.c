@@ -15,11 +15,11 @@
 
 void	ft_putnbr_ll(long long int n)
 {
-	if (n == MIN_SI64)
+	if ((n + 1) == -9223372036854775807)
 	{
 		ft_putchar('-');
 		ft_putchar('9');
-		ft_putnbr_ll(223372036854775807);
+		ft_putnbr_ll(223372036854775808);
 		return ;
 	}
 	if (n < 0)

@@ -23,10 +23,8 @@ void	ft_find_flags(char specs, t_params *ptr)
 		ptr->flag_more = TRUE;
 	if (specs == ' ')
 		ptr->flag_space = TRUE;
-	if (specs == '0' && ptr->flag_point == FALSE)
+	if (specs == '0')
 		ptr->flag_zero = TRUE;
-	if (specs == '.')
-		ptr->flag_point = TRUE;
 }
 
 int		ft_find_width(char *specs, t_params *ptr)
@@ -92,9 +90,9 @@ int		ft_find_params(char *specs, t_params *ptr)
 	int ret;
 
 	ret = 0;
-	if (ft_strchr("#-+ 0.", *specs))
+	if (ft_strchr("#-+ 0", *specs))
 		ft_find_flags(*specs, ptr);
-	else if (ft_isdigit(*specs) && ptr->flag_point == FALSE)
+	else if (ft_isdigit(*specs))
 		ret = ft_find_width(specs, ptr);
 	else if (ft_isdigit(*specs) && *(specs - 1) == '.')
 		ret = ft_find_precision(specs, ptr);
