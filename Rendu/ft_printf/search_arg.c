@@ -19,8 +19,10 @@ void	ft_arg_char(va_list ap, t_type *all_type, char type)
 		all_type->wc = (wchar_t)va_arg(ap, int);
 	else if (type == 'u')
 		all_type->ud = (uintmax_t)va_arg(ap, int);
-	else if (ft_strchr("cdioxX", type))
+	else if (type == 'c')
 		all_type->c = (char)va_arg(ap, int);
+	else if (ft_strchr("dioxX", type))
+		all_type->d = (intmax_t)va_arg(ap, int);
 }
 
 void	ft_arg_str(va_list ap, t_type *all_type, char type)

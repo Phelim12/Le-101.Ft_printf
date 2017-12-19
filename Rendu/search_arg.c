@@ -17,10 +17,12 @@ void	ft_arg_char(va_list ap, t_type *all_type, char type)
 {
 	if (type == 'C')
 		all_type->wc = (wchar_t)va_arg(ap, int);
+	else if (type == 'c')
+		all_type->c = (char)va_arg(ap, int);
 	else if (type == 'u')
 		all_type->ud = (uintmax_t)va_arg(ap, int);
-	else if (ft_strchr("cdioxX", type))
-		all_type->c = (char)va_arg(ap, int);
+	else if (ft_strchr("dioxX", type))
+		all_type->d = (intmax_t)va_arg(ap, int);
 }
 
 void	ft_arg_str(va_list ap, t_type *all_type, char type)
@@ -51,12 +53,12 @@ void	ft_arg_int(va_list ap, t_type *all_type, char size_type, char type)
 		all_type->ud = (uintmax_t)va_arg(ap, unsigned long);
 	else if (size_type == 'l' && type != 'u')
 		all_type->d = (intmax_t)va_arg(ap, long);
-	else if (type == 'u' && size_type == 0)
-		all_type->ud = (uintmax_t)va_arg(ap, unsigned int);
 	else if (size_type == 'z')
 		all_type->ud = (uintmax_t)va_arg(ap, size_t);
 	else if (ft_strchr("dioxX", type))
-		all_type->d = (uintmax_t)va_arg(ap, int);
+		all_type->d = (intmax_t)va_arg(ap, int);
+	else if (type == 'u')
+		all_type->ud = (uintmax_t)va_arg(ap, unsigned int);
 }
 
 void	ft_search_arg(va_list ap, t_type *all_type, t_params *p, char type)

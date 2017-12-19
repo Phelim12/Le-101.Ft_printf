@@ -37,6 +37,7 @@ SRC = 	ft_atoi.c ft_bzero.c ft_count_len.c ft_count_words.c ft_fillstr.c 	\
 		ft_next_sqrt.c ft_putnbr_base.c ft_putnbr_ll.c ft_putnbr_llu.c 		\
 		ft_putnbr_u.c ft_sqrt.c ft_putnbr_base_ll.c ft_putnbr_base_llu.c	\
 		ft_putnbr_base_u.c ft_lenint_max.c ft_lenuint_max.c ft_len_base_ll.c\
+		ft_putnbr_hd.c 
 
 all: $(NAME)
 

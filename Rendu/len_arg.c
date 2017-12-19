@@ -13,6 +13,16 @@
 
 # include "ft_printf.h"
 
+int 	ft_wstrlen(wchar_t *wstr)
+{
+	int cur;
+
+	cur = 0;
+	while (wstr[cur])
+		cur++;
+	return (cur);
+}
+
 int		ft_len_conv(t_type all_type, t_params flags, char type)
 {
 	if (flags.size_type == 'H' && (type == 'x' || type == 'X'))
@@ -35,10 +45,10 @@ int		ft_len_arg(t_type all_type, t_params flags, char type)
 		return (1);
 	if ((type == 'X' || type == 'x') && flags.flag_hashtag == TRUE)
 		prefix = 2;
-	if ((type == 'O' || type == 'o') && flags.flag_hashtag == TRUE)
+	if ((((type == 'O' || type == 'o') && flags.flag_hashtag == TRUE)) || flags.flag_more == TRUE)
 		prefix = 1;
-	//if (type == 'S')
-		//return (ft_wstrlen(all_type.wstr));
+	if (type == 'S')
+		return (ft_wstrlen(all_type.wstr));
 	if (type == 's' && all_type.str != NULL)
 		return (ft_strlen(all_type.str));
 	if (type == 'c' || type == 'C')

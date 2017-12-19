@@ -19,6 +19,8 @@
 # define MAX_SCHAR 127
 # define MIN_SCHAR -128
 # define MAX_UCHAR 255
+# define MIN_SHORT -32768
+# define MAX_SHORT 32767
 # define MIN_SINT -2147483648
 # define MAX_SINT 2147483647
 # define MAX_UINT 4294967295
@@ -156,6 +158,7 @@ void			ft_putnbr_u(unsigned int n);
 void			ft_putnbr_fd(int n, int fd);
 void			ft_bzero(void *s, size_t n);
 void			ft_putendl(char const *s);
+void			ft_putnbr_hd(short int n);
 void			ft_putstr(char const *s);
 void			ft_memdel(void **ap);
 void			ft_strdel(char **as);

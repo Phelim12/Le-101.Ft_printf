@@ -109,9 +109,9 @@ int				ft_len_arg(t_type all_type, t_params flags, char type);
 /*┃                              print_params.c                             ┃*/
 /*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
 
-int				ft_print_width(t_type all_type, t_params flags, char type, char first);
+int				ft_print_width(t_type all_type, t_params *flags, char type, int zero);
 int				ft_print_flags(t_type all_type, t_params flags, char tydpe);
 int				ft_print_params(va_list ap, t_params flags, char type);
-int 			ft_print_prefix(char type);
+int 			ft_print_prefix(t_type a, t_params flags, char type);
 
 #endif

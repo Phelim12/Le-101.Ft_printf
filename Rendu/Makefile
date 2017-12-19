@@ -38,7 +38,7 @@ SRC1 = 	ft_atoi.c ft_bzero.c ft_count_len.c ft_count_words.c ft_fillstr.c 	\
 		ft_putnbr_u.c ft_sqrt.c ft_putnbr_base_llu.c ft_len_base_u.c        \
 		ft_putnbr_base_u.c ft_lenint_max.c ft_lenuint_max.c ft_len_base_llu.c\
 		find_params.c ft_printf.c len_arg.c print_arg.c reset.c search_arg.c\
-		print_params.c 
+		print_params.c ft_putnbr_hd.c
 all: $(NAME)
 
 $(NAME): $(OBJ)

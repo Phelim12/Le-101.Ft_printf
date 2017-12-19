@@ -13,40 +13,55 @@
 
 # include "ft_printf.h"
 
-int		ft_print_width(t_type all_type, t_params flags, char type, char first)
+int		ft_print_prefix(t_type a, t_params flags, char type)
+{
+	if (flags.flag_hashtag == TRUE && (type == 'x' || type == 'X') && a.d > 0)
+	{
+		if (type == 'X')
+			ft_putstr("0X");
+		else
+			ft_putstr("0x");
+		return (2);
+	}
+	if (flags.flag_hashtag == TRUE && type == 'o')
+	{
+		ft_putchar('0');
+		return (1);
+	}
+	if (flags.flag_more == TRUE && a.d >= 0)
+	{
+		if (flags.flag_space == TRUE && flags.len_arg >= flags.size_width)
+			ft_putchar('+');
+		if (flags.flag_space == FALSE)
+			ft_putchar('+');
+		return (1);
+	}
+	return (0);
+}
+
+int		ft_print_width(t_type all_type, t_params *flags, char type, int zero)
 {
 	int ret;
+	int print;
 
 	ret = 0;
-	while (flags.size_width > 0 && flags.size_width > flags.size_precision && first == flags.flag_less)
+	flags->size_width -= flags->len_arg;
+	if (ft_strchr("udioxX", type) && zero && (flags->size_width <= 0 || flags->flag_zero == TRUE))
+		ret += ft_print_prefix(all_type, *flags, type);
+	print = ret;
+	while (flags->flag_less != zero && flags->size_width-- > 0 )
 	{
-		ret++;
-		if (flags.flag_zero == TRUE)
+		if (flags->flag_zero == TRUE && zero == 1)
 			ft_putchar('0');
 		else
 			ft_putchar(' ');
-		flags.size_width--;
-	}
-	while ((flags.len_arg + ret) < flags.size_precision && flags.flag_less == FALSE)
-	{
-		ft_putchar('0');
 		ret++;
 	}
+	if (ft_strchr("udioxX", type) && zero && print == 0)
+		ret += ft_print_prefix(all_type, *flags, type);
+	if (flags->flag_less == TRUE)
+		flags->size_width += flags->len_arg;
 	return (ret);
-}
-
-int 	ft_print_prefix(char type)
-{
-	if (type == 'X' || type == 'x')
-	{
-		if (type == 'x')
-			ft_putstr("0x");
-		else
-			ft_putstr("0X");
-		return (2);
-	}
-	ft_putchar('0');
-	return (1);
 }
 
 int		ft_print_flags(t_type all_type, t_params flags, char type)
@@ -54,18 +69,9 @@ int		ft_print_flags(t_type all_type, t_params flags, char type)
 	int ret;
 
 	ret = 0;
-	flags.size_width -= ft_len_arg(all_type, flags, type);
-	if (flags.flag_hashtag == TRUE && ft_strchr("OoXx", type) && all_type.d != 0 && flags.flag_zero == TRUE)
-		ret += ft_print_prefix(type);
-	if (flags.size_width > 0)
-		ret += ft_print_width(all_type, flags, type, 0);
-	if (flags.flag_hashtag == TRUE && ft_strchr("OoXx", type) && all_type.d != 0 && flags.flag_zero == FALSE)
-		ret += ft_print_prefix(type);
-	if (ft_strchr("Ddi", type) && flags.flag_space && !flags.flag_less && all_type.d >= 0 && !ret && !ret++)
-		ft_putchar(' ');
+	ret += ft_print_width(all_type, &flags, type, 1);
 	ret += ft_print_arg(all_type, flags, type);
-	if (flags.size_width > 0)
-		ret += ft_print_width(all_type, flags, type, 1);
+	ret += ft_print_width(all_type, &flags, type, 0);
 	return (ret);
 }
 

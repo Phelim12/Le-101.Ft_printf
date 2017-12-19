@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   test.c                                           .::    .:/ .      .::   */
+/*   ft_putnbr_hd.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/15 19:22:37 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/15 19:22:37 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/19 20:41:09 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/12/19 20:41:09 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include <wchar.h>
-# include "ft_printf.h"
+#include "libft.h"
 
-int main()
+void	ft_putnbr_hd(short int n)
 {
- 	char test;
-
- 	test = 0;
-	ft_printf("%#08x", 42);
-	return (0);
+	if (n == MIN_SHORT)
+	{
+		ft_putchar('-');
+		ft_putchar('3');
+		ft_putnbr_hd(2768);
+		return ;
+	}
+	if (n < 0)
+	{
+		ft_putchar('-');
+		n = -n;
+	}
+	if (n >= 10)
+	{
+		ft_putnbr_hd(n / 10);
+		ft_putchar(n % 10 + '0');
+	}
+	if (n < 10)
+		ft_putchar(n + '0');
 }
