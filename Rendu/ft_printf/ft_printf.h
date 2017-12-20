@@ -16,7 +16,7 @@
 
 # include <stdio.h>
 # include <stdarg.h>
-# include "libft.h"
+# include "../Libft/libft.h"
 
 # define PRINTF_TYPE "sSpdDioOuUxXcC%"
 

@@ -19,7 +19,11 @@ C_FLAGS = -Wall -Wextra -Werror
 
 NAME = libftprintf.a
 
-OBJ = $(SRC_PRINTF:.c=.o)
+OBJ = $(OBJ1) $(OBJ2)
+
+OBJ1 = $(SRC_PRINTF:.c=.o)
+
+OBJ2 = $(wildcard Libft/*.o)
 
 D_LIB = Libft/
 
@@ -30,17 +34,17 @@ D_SRC = Ft_printf/
 SRC = find_params.c ft_printf.c len_arg.c print_arg.c print_params.c reset.c \
 	search_arg.c
 
-SRC_ALUM = $(addprefix $(D_SRC), $(SRC))		
+SRC_PRINTF = $(addprefix $(D_SRC), $(SRC))		
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(D_LIB)
-	@$(CC) -o $(NAME) $(OBJ) -L $(D_LIB) -lft
+	@ar rcs $(NAME) $(OBJ)
 	@echo "\033[0;32m✅️    $(NAME) created."
 
 ./%.o: ./%.c
-	@$(CC) $(CFLAGS) -o $@ -c $< -I $(D_INC)
+	@$(CC) $(CFLAGS) -o $@ -c $<
 	@echo "\033[0;32m✅️    $@ created."
 
 clean:

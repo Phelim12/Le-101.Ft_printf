@@ -11,9 +11,9 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "libft.h"
+# include "Libft/libft.h"
 # include <wchar.h>
-# include "ft_printf.h"
+# include "Ft_printf/ft_printf.h"
 
 int main()
 {
