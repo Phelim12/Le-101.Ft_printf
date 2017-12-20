@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   test.c                                           .::    .:/ .      .::   */
+/*   ft_str_is_num.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/15 19:22:37 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/15 19:22:37 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/17 17:43:48 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/12/17 17:43:48 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include <wchar.h>
-# include "ft_printf.h"
+#include "../Includes/libft.h"
 
-int main()
+int		ft_str_is_num(const char *str)
 {
- 	char test;
+	int a;
 
- 	test = 0;
-	printf("    ft_printf = %d   \n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("    printf = %d   ", printf("@moulitest: %5.d %5.0d", 0, 0));
-	return (0);
+	a = 0;
+	while (str[a])
+		if (ft_isdigit(str[a]))
+			a++;
+		else
+			return (0);
+	return (1);
 }

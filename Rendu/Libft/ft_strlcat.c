@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   test.c                                           .::    .:/ .      .::   */
+/*   ft_strlcat.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/15 19:22:37 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/15 19:22:37 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/11/24 22:07:04 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/11/24 22:07:04 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include <wchar.h>
-# include "ft_printf.h"
+#include "../Includes/libft.h"
 
-int main()
+size_t	ft_strlcat(char *d, const char *s, size_t n)
 {
- 	char test;
+	size_t		i;
+	size_t		t1;
+	size_t		t2;
 
- 	test = 0;
-	printf("    ft_printf = %d   \n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("    printf = %d   ", printf("@moulitest: %5.d %5.0d", 0, 0));
-	return (0);
+	i = 0;
+	t1 = ft_strlen(d);
+	t2 = ft_strlen(s);
+	if (n <= t1)
+		return (t2 + n);
+	while (*d++ && i < (n - 1))
+		i++;
+	d--;
+	while (*s && i < n - 1)
+	{
+		*d++ = *s++;
+		i++;
+	}
+	*d = '\0';
+	return (t1 + t2);
 }

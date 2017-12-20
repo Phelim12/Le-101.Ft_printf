@@ -12,19 +12,102 @@
 /* ************************************************************************** */
 
 # include "ft_printf.h"
+# include <stdio.h>
+
+int		ft_print_utf(unsigned char *str, int cur)
+{
+	int ret;
+
+	ret = cur;
+	while (cur >= 0)
+		write(1, &str[cur--], 1);
+	return (ret);
+}
+
+int 	ft_wchar_two(wchar_t w)
+{
+	unsigned char *tmp;
+
+	tmp = (unsigned char *)ft_strnew(2);
+	tmp[1] = ((w >> 6) | 192);
+	if (w)
+		tmp[0] = ((w ^ ((w >> 6) << 6)) | 128);
+	return (ft_print_utf(tmp, 2));
+}
+
+int 	ft_wchar_three(wchar_t w)
+{
+	unsigned char *tmp;
+
+	tmp = (unsigned char *)ft_strnew(3);
+	tmp[2] = ((w >> 12) | 224);
+	if (w >> 6)
+		tmp[1] = ((((w >> 6) ^ ((w >> 12) << 6))) | 128);
+	if (w)
+		tmp[0] = ((w ^ ((w >> 6) << 6)) | 128);
+	return (ft_print_utf(tmp, 3));
+}
+
+int 	ft_wchar_four(wchar_t w)
+{
+	unsigned char *tmp;
+
+	tmp = (unsigned char *)ft_strnew(4);
+	tmp[3] = ((w >> 18) | 240);
+	if (w >> 12)
+		tmp[2] = ((((w >> 12) ^ ((w >> 18) << 6))) | 128);
+	if (w >> 6)
+		tmp[1] = ((((w >> 6) ^ ((w >> 12) << 6))) | 128);
+	if (w)
+		tmp[0] = ((w ^ ((w >> 6) << 6)) | 128);
+	return (ft_print_utf(tmp, 4));
+}
+
+int 	ft_putwchar(wchar_t w)
+{
+	if (w >= 1 && w <= 127)
+	{
+		ft_putchar((char)w);
+		return (1);
+	}
+	else if (w >= 128 && w <= 2047)
+		return (ft_wchar_two(w));
+	else if (w >= 2048 && w <= 65535)
+		return (ft_wchar_three(w));
+	else if (w >= 65536 && w <= 2097151)
+		return (ft_wchar_four(w));
+	return (0);
+}
+
+int 	ft_putwstr(wchar_t *wstr)
+{
+	int ret;
+	int cur;
+
+	ret = 0;
+	cur = 0;
+	while (wstr[cur])
+	{
+		ret += ft_putwchar(wstr[cur]);
+		cur++;
+	}
+	return (ret);
+}
 
 int 	ft_print_str(t_type all_type, char type)
 {
 	if (type == 's')
 	{
+		if (all_type.str == NULL)
+		{
+			ft_putstr("(null)");
+			return (6);
+		}
 		ft_putstr(all_type.str);
 		return (ft_strlen(all_type.str));
 	}
 	if (type == 'S')
-	{
-		//ft_putstr(all_type.wstr);
-		//return (ft_strlen(all_type.wstr));
-	}
+		return (ft_putwstr(all_type.wstr));
 	return (0);
 }
 
@@ -36,19 +119,81 @@ int 	ft_print_char(t_type all_type, char type)
 		return (1);
 	}
 	if (type == 'C')
-	{
-		//ft_putchar(all_type.wc);
-		return (4);
-	}
+		return (ft_putwchar(all_type.wc));
 	return (0);
 }
 
-int 	ft_print_int(t_type all_type, char type, int ret)
+int 	ft_print_majx(intmax_t d, t_params flags)
+{
+	int ret;
+
+	ret = 1;
+	if (d == 0 && flags.flag_point == FALSE)
+		ft_putchar('0');
+	else if (flags.size_type == 'L' || flags.size_type == 'j')
+	{
+		ft_putnbr_base_llu((uintmax_t)d, "0123456789ABCDEF");
+		ret = ft_len_base_llu((uintmax_t)d, "0123456789ABCDEF");
+	}
+	else
+	{
+		ft_putnbr_base_u((unsigned int)d, "0123456789ABCDEF");
+		ret = ft_len_base_u((unsigned int)d, "0123456789ABCDEF");
+	}
+	return (ret);
+}
+
+int 	ft_print_minx(intmax_t d, t_params flags)
+{
+	int ret;
+
+	ret = 1;
+	if (d == 0 && flags.flag_point == FALSE)
+		ft_putchar('0');
+	else if (flags.size_type == 'L' || flags.size_type == 'j' || flags.size_type == 'l')
+	{
+		ft_putnbr_base_llu((uintmax_t)d, "0123456789abcdef");
+		ret = ft_len_base_llu((uintmax_t)d, "0123456789abcdef");
+	}
+	else
+	{
+		ft_putnbr_base_u((unsigned long int)d, "0123456789abcdef");
+		ret = ft_len_base_u((unsigned int)d, "0123456789abcdef");
+	}
+	return (ret);
+}
+
+int 	ft_print_octal(intmax_t d, t_params flags)
+{
+	int ret;
+
+	ret = 1;
+	if (d == 0 && flags.flag_point == FALSE)
+		ft_putchar('0');
+	else if (flags.size_type == 'L' || flags.size_type == 'j')
+	{
+		ft_putnbr_base_llu((uintmax_t)d, "01234567");
+		ret = ft_len_base_llu((uintmax_t)d, "01234567");
+	}
+	else
+	{
+		ft_putnbr_base_u((unsigned int)d, "01234567");
+		ret = ft_len_base_u((unsigned int)d, "01234567");
+	}
+	return (ret);
+}
+
+int 	ft_print_int(t_type all_type, t_params flags, char type, int ret)
 {
 	if (type == 'd' || type == 'i')
 	{
-		ft_putnbr_ll(all_type.d);
-		ret = ft_lenint_max(all_type.d);	
+		if (flags.flag_point == TRUE && all_type.d == 0)
+			return (0);
+		if (flags.size_type == 'h')
+			ft_putnbr_hd(all_type.d, 0);
+		else
+			ft_putnbr_ll(all_type.d, 0);
+		ret = ft_lenint_max(all_type.d, 0);	
 	}
 	else if (type == 'u')
 	{
@@ -56,20 +201,11 @@ int 	ft_print_int(t_type all_type, char type, int ret)
 		ret = ft_lenuint_max(all_type.ud);
 	}
 	else if (type == 'o')
-	{
-		ft_putnbr_base_ll(all_type.d, "01234567");
-		ret = ft_len_base_ll(all_type.d, "01234567");
-	}
+		ret = ft_print_octal(all_type.d, flags);
 	else if (type == 'x')
-	{
-		ft_putnbr_base_ll(all_type.d, "0123456789abcdef");
-		ret = ft_len_base_ll(all_type.d, "0123456789abcdef");
-	}
+		ret = ft_print_minx(all_type.d, flags);
 	else if (type == 'X')
-	{
-		ft_putnbr_base_ll(all_type.d, "0123456789ABCDEF");
-		ret = ft_len_base_ll(all_type.d, "0123456789ABCDEF");
-	}
+		ret = ft_print_majx(all_type.d, flags);
 	return (ret);
 }
 
@@ -90,69 +226,6 @@ int		ft_print_arg(t_type all_type, t_params flags, char type)
 	else if (type == 'c' || type == 'C')
 		ret = ft_print_char(all_type, type);
 	else if (ft_strchr("diouxX", type))
-		ret = ft_print_int(all_type, type, 0);
+		ret = ft_print_int(all_type, flags, type, 0);
 	return (ret);
-}
-
-int		ft_print_width(t_params flags)
-{
-	int ret;
-
-	ret = 0;
-	while (flags.size_width > 0)
-	{
-		ret++;
-		if (flags.flag_zero == TRUE)
-			ft_putchar('0');
-		else
-			ft_putchar(' ');
-		flags.size_width--;
-	}
-	return (ret);
-}
-
-int 	ft_print_prefix(char type)
-{
-	if (type == 'X')
-	{
-		ft_putstr("0X");
-		return (2);
-	}
-	if (type == 'x')
-	{
-		ft_putstr("0x");
-		return (2);
-	}
-	if (type == 'o')
-		ft_putchar('0');
-	if (type == 'O')
-		ft_putchar('0');
-	return (1);
-}
-
-int		ft_print_flags(t_type all_type, t_params flags, char type)
-{
-	int ret;
-
-	ret = 0;
-	flags.size_width -= ft_len_arg(all_type, flags, type);
-	if (flags.flag_less == FALSE && flags.size_width > 0)
-		ret += ft_print_width(flags);
-	if (flags.flag_hashtag == TRUE && ft_strchr("OoXx", type))
-		ret += ft_print_prefix(type);
-	if (ft_strchr("Ddi", type) && flags.flag_space && !flags.flag_less && all_type.d >= 0 && !ret && !ret++)
-		ft_putchar(' ');
-	ret += ft_print_arg(all_type, flags, type);
-	if (flags.flag_less == TRUE && flags.size_width > 1)
-		ret += ft_print_width(flags);
-	return (ret);
-}
-
-int		ft_print_params(va_list ap, t_params flags, char type)
-{
-	t_type all_type;
-
-	reset_all_type(&all_type);
-	ft_search_arg(ap, &all_type, &flags, type);
-	return (ft_print_flags(all_type, flags, type));
 }

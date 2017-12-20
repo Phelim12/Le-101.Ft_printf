@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   test.c                                           .::    .:/ .      .::   */
+/*   ft_strcmp.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/15 19:22:37 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/15 19:22:37 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/11/24 22:06:08 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/11/24 22:06:08 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include <wchar.h>
-# include "ft_printf.h"
+#include "../Includes/libft.h"
 
-int main()
+int		ft_strcmp(const char *s1, const char *s2)
 {
- 	char test;
-
- 	test = 0;
-	printf("    ft_printf = %d   \n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("    printf = %d   ", printf("@moulitest: %5.d %5.0d", 0, 0));
-	return (0);
+	while (*s1 == *s2 && *s1)
+	{
+		s2++;
+		s1++;
+	}
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }

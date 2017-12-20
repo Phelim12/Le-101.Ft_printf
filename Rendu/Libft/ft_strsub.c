@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   test.c                                           .::    .:/ .      .::   */
+/*   ft_strsub.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/15 19:22:37 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/15 19:22:37 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/11/24 22:08:32 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/11/24 22:08:32 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include <wchar.h>
-# include "ft_printf.h"
+#include "../Includes/libft.h"
 
-int main()
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
- 	char test;
+	char	*str;
 
- 	test = 0;
-	printf("    ft_printf = %d   \n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("    printf = %d   ", printf("@moulitest: %5.d %5.0d", 0, 0));
-	return (0);
+	if (!s)
+		return ((char *)s);
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (start--)
+		s++;
+	ft_strncpy(str, s, len);
+	str[len] = '\0';
+	return (str);
 }

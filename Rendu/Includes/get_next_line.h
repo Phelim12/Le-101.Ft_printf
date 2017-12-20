@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   test.c                                           .::    .:/ .      .::   */
+/*   get_next_line.h                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/15 19:22:37 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/15 19:22:37 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/11/27 20:09:30 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/11/27 20:09:30 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+
+# define BUFF_SIZE 32
+
 # include "libft.h"
-# include <wchar.h>
-# include "ft_printf.h"
+# include <stdlib.h>
+# include <unistd.h>
 
-int main()
-{
- 	char test;
+int		get_next_line(int const fd, char **line);
 
- 	test = 0;
-	printf("    ft_printf = %d   \n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("    printf = %d   ", printf("@moulitest: %5.d %5.0d", 0, 0));
-	return (0);
-}
+#endif

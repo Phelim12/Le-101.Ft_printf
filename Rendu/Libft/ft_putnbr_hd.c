@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   test.c                                           .::    .:/ .      .::   */
+/*   ft_putnbr_hd.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/15 19:22:37 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/15 19:22:37 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/19 20:41:09 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/12/19 20:41:09 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include <wchar.h>
-# include "ft_printf.h"
+#include "libft.h"
 
-int main()
+void	ft_putnbr_hd(short int n, int sign)
 {
- 	char test;
-
- 	test = 0;
-	printf("    ft_printf = %d   \n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("    printf = %d   ", printf("@moulitest: %5.d %5.0d", 0, 0));
-	return (0);
+	if (n == MIN_SHORT)
+	{
+		if (sign)
+			ft_putchar('-');
+		ft_putchar('3');
+		ft_putnbr_hd(2768, sign);
+		return ;
+	}
+	if (n < 0)
+	{
+		if (sign)
+			ft_putchar('-');
+		n = -n;
+	}
+	if (n >= 10)
+	{
+		ft_putnbr_hd(n / 10, sign);
+		ft_putchar(n % 10 + '0');
+	}
+	if (n < 10)
+		ft_putchar(n + '0');
 }

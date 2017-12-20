@@ -32,10 +32,14 @@ typedef struct	s_params
 	char		flag_zero;
 	char		flag_less;
 	char		flag_more;
+	char		flag_point;
 	char		size_type;
 	char        new_type;
+	int			print_sign;
+	int			print_prefix;
 	int			size_width;
 	int			size_precision;
+	int			len_arg;
 }				t_params;
 
 /*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
@@ -93,12 +97,8 @@ t_params		reset_params(int *ptr1, int *ptr2, int first);
 
 int 			ft_print_str(t_type all_type, char type);
 int 			ft_print_char(t_type all_type, char type);
-int 			ft_print_int(t_type all_type, char type, int ret);
-int				ft_print_width(t_params flags);
-int 			ft_print_prefix(char type);
-int				ft_print_flags(t_type all_type, t_params flags, char type);
-int				ft_print_params(va_list ap, t_params flags, char type);
 int				ft_print_arg(t_type all_type, t_params flags, char type);
+int 			ft_print_int(t_type all_type, t_params flags, char type, int ret);
 
 /*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
 /*┃                                len_arg.c                                ┃*/
@@ -107,5 +107,13 @@ int				ft_print_arg(t_type all_type, t_params flags, char type);
 int				ft_len_conv(t_type all_type, t_params flags, char type);
 int				ft_len_arg(t_type all_type, t_params flags, char type);
 
+/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
+/*┃                              print_params.c                             ┃*/
+/*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+
+int				ft_print_width(t_type all_type, t_params *flags, char type);
+int				ft_print_prefix(t_type a, t_params *flags, char type);
+int				ft_print_flags(t_type all_type, t_params flags, char tydpe);
+int				ft_print_params(va_list ap, t_params flags, char type);
 
 #endif

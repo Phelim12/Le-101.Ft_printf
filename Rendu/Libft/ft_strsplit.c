@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   test.c                                           .::    .:/ .      .::   */
+/*   ft_strsplit.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/15 19:22:37 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/15 19:22:37 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/11/24 22:08:21 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/11/24 22:08:21 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include <wchar.h>
-# include "ft_printf.h"
+#include "../Includes/libft.h"
 
-int main()
+char	**ft_strsplit(char const *s, char c)
 {
- 	char test;
+	char	**tab;
+	int		a;
 
- 	test = 0;
-	printf("    ft_printf = %d   \n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("    printf = %d   ", printf("@moulitest: %5.d %5.0d", 0, 0));
-	return (0);
+	a = 0;
+	if (!s)
+		return (NULL);
+	tab = (char **)malloc(sizeof(char *) * ft_count_words(s, 0, c));
+	if (!tab)
+		return (NULL);
+	while (*s)
+	{
+		while (*s == c)
+			s++;
+		if (*s != '\0')
+			tab[a++] = ft_fillstr((char *)s, c);
+		while (*s != c && *s != '\0')
+			s++;
+	}
+	tab[a] = NULL;
+	return (tab);
 }

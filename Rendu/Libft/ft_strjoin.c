@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   test.c                                           .::    .:/ .      .::   */
+/*   ft_strjoin.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/15 19:22:37 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/15 19:22:37 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/11/24 22:07:00 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/11/24 22:07:00 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include <wchar.h>
-# include "ft_printf.h"
+#include "../Includes/libft.h"
 
-int main()
+char	*ft_strjoin(char const *s1, char const *s2)
 {
- 	char test;
+	char	*new;
+	int		a;
 
- 	test = 0;
-	printf("    ft_printf = %d   \n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("    printf = %d   ", printf("@moulitest: %5.d %5.0d", 0, 0));
-	return (0);
+	if (!s1 || !s2)
+		return ((char *)s1);
+	a = (ft_strlen((char *)s1) + ft_strlen((char *)s2));
+	new = (char *)malloc(sizeof(char) + (a + 1));
+	if (!new)
+		return (NULL);
+	ft_strcpy(new, s1);
+	ft_strcat(new, (char *)s2);
+	return (new);
 }

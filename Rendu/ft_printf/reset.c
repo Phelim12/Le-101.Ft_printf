@@ -32,9 +32,12 @@ t_params	reset_params(int *ptr1, int *ptr2, int first)
 		*ptr1 = 0;
 		*ptr2 = 0;
 	}
-	ret.size_precision = 0;
+	ret.size_precision = -1;
+	ret.print_prefix = 1;
 	ret.flag_hashtag = 0;
+	ret.print_sign = 1;
 	ret.size_width = 0;
+	ret.flag_point = 0;
 	ret.flag_space = 0;
 	ret.flag_zero = 0;
 	ret.flag_less = 0;
