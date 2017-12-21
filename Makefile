@@ -19,42 +19,40 @@ C_FLAGS = -Wall -Wextra -Werror
 
 NAME = libftprintf.a
 
-OBJ = $(OBJ1) $(OBJ2)
+DIR_LIB = Libft
 
-OBJ1 = $(SRC_PRINTF:.c=.o)
+DIR_HEAD = Includes
 
-OBJ2 = $(wildcard Libft/*.o)
+DIR_SRC = Sources
 
-D_LIB = Libft/
+DIR_OBJ = Objects
 
-D_INC = Includes/
+SRCS = find_params.c ft_printf.c len_arg.c print_arg.c print_params.c reset.c \
+	search_arg.c	
 
-D_SRC = Ft_printf/
-
-SRC = find_params.c ft_printf.c len_arg.c print_arg.c print_params.c reset.c \
-	search_arg.c
-
-SRC_PRINTF = $(addprefix $(D_SRC), $(SRC))		
+OBJS = $(addprefix $(DIR_OBJ)/,$(SRCS:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@make -C $(D_LIB)
-	@ar rcs $(NAME) $(OBJ)
+$(NAME): $(OBJS)
+	@make -C $(DIR_LIB)
+	@cp libft/libft.a ./$(NAME)
+	@ar -rcs $(NAME) $(OBJS)
 	@echo "\033[0;32m✅️    $(NAME) created."
 
-./%.o: ./%.c
+$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
+	@mkdir -p $(DIR_OBJ)
 	@$(CC) $(CFLAGS) -o $@ -c $<
 	@echo "\033[0;32m✅️    $@ created."
 
 clean:
-	@rm -f $(OBJ)
-	@make clean -C $(D_LIB)
+	@rm -rf $(DIR_OBJ)
+	@make clean -C $(DIR_LIB)
 	@echo "\033[0;31m🗑️    Deleting object files." 
 
 fclean: clean
 	@rm -f $(NAME)
-	@make fclean -C $(D_LIB)
+	@make fclean -C $(DIR_LIB)
 	@echo "\033[0;31m🗑️    Deleting $(NAME) executable." 
 
 re: fclean all
