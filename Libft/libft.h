@@ -159,11 +159,11 @@ void			ft_putnbr_fd(int n, int fd);
 void			ft_bzero(void *s, size_t n);
 void			ft_putendl(char const *s);
 void			ft_putnbr_hd(short int n, int sign);
-int			ft_putstr(char const *s);
+int				ft_putstr(char const *s);
 void			ft_memdel(void **ap);
 void			ft_strdel(char **as);
 void			ft_strclr(char *s);
-int			ft_putchar(char c);
+int				ft_putchar(char c);
 void			ft_putnbr(int n, int sign);
 
 #endif
