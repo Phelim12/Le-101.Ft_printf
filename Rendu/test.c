@@ -15,12 +15,14 @@
 # include <wchar.h>
 # include "Ft_printf/ft_printf.h"
 
-int main()
-{
- 	char test;
+int ft_printf(char const *str, ...);
 
- 	test = 0;
-	printf("    ft_printf = %d   \n", ft_printf("@moulitest: %5.d %5.0d", 0, 0));
-	printf("    printf = %d   ", printf("@moulitest: %5.d %5.0d", 0, 0));
+int main(void)
+{
+	int a = 0;
+	int test = 24;
+	printf("%d", ft_printf("%S", L"Á±≥"));
+	printf("%d", printf("%S", L"Á±≥"));
+
 	return (0);
 }

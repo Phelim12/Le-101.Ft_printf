@@ -21,6 +21,7 @@ int		ft_print_utf(unsigned char *str, int cur)
 	ret = cur;
 	while (cur >= 0)
 		write(1, &str[cur--], 1);
+	free(str);
 	return (ret);
 }
 
@@ -66,10 +67,7 @@ int 	ft_wchar_four(wchar_t w)
 int 	ft_putwchar(wchar_t w)
 {
 	if (w >= 1 && w <= 127)
-	{
-		ft_putchar((char)w);
-		return (1);
-	}
+		return (ft_putchar((char)w));
 	else if (w >= 128 && w <= 2047)
 		return (ft_wchar_two(w));
 	else if (w >= 2048 && w <= 65535)
@@ -99,12 +97,8 @@ int 	ft_print_str(t_type all_type, char type)
 	if (type == 's')
 	{
 		if (all_type.str == NULL)
-		{
-			ft_putstr("(null)");
-			return (6);
-		}
-		ft_putstr(all_type.str);
-		return (ft_strlen(all_type.str));
+			return (ft_putstr("(null)"));
+		return (ft_putstr(all_type.str));
 	}
 	if (type == 'S')
 		return (ft_putwstr(all_type.wstr));
@@ -183,6 +177,18 @@ int 	ft_print_octal(intmax_t d, t_params flags)
 	return (ret);
 }
 
+int 	ft_print_ptr(uintmax_t ud)
+{
+	int ret;
+
+	ret = ft_putstr("0x");
+	if (ud == 0)
+		ret += ft_putchar('0');
+	ft_putnbr_base_llu(ud, "0123456789abcdef");
+	ret += ft_len_base_llu(ud, "0123456789abcdef");
+	return (ret);
+}
+
 int 	ft_print_int(t_type all_type, t_params flags, char type, int ret)
 {
 	if (type == 'd' || type == 'i')
@@ -190,7 +196,7 @@ int 	ft_print_int(t_type all_type, t_params flags, char type, int ret)
 		if (flags.flag_point == TRUE && all_type.d == 0)
 			return (0);
 		if (flags.size_type == 'h')
-			ft_putnbr_hd(all_type.d, 0);
+			ft_putnbr_hd((short int)all_type.d, 0);
 		else
 			ft_putnbr_ll(all_type.d, 0);
 		ret = ft_lenint_max(all_type.d, 0);	
@@ -206,6 +212,8 @@ int 	ft_print_int(t_type all_type, t_params flags, char type, int ret)
 		ret = ft_print_minx(all_type.d, flags);
 	else if (type == 'X')
 		ret = ft_print_majx(all_type.d, flags);
+	else if (type == 'p')
+		ret = ft_print_ptr(all_type.ud);
 	return (ret);
 }
 
@@ -215,17 +223,14 @@ int		ft_print_arg(t_type all_type, t_params flags, char type)
 
 	ret = 0;
 	if (type == '%')
-	{
-		ft_putchar('%');
-		return (1);
-	}
+		return (ft_putchar('%'));
 	if (flags.new_type)
 		type = flags.new_type;
 	if (type == 's' || type == 'S')
 		ret = ft_print_str(all_type, type);
 	else if (type == 'c' || type == 'C')
 		ret = ft_print_char(all_type, type);
-	else if (ft_strchr("diouxX", type))
+	else if (ft_strchr("pdiouxX", type))
 		ret = ft_print_int(all_type, flags, type, 0);
 	return (ret);
 }

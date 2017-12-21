@@ -19,6 +19,8 @@
 # include "../Libft/libft.h"
 
 # define PRINTF_TYPE "sSpdDioOuUxXcC%"
+# define PRINTF_SPECS "#0-+ 123456789.hljz"
+
 
 /*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
 /*┃         This structure groups all the parameters of the argument        ┃*/
@@ -56,6 +58,8 @@ typedef struct	s_type
 	intmax_t	d;
 	uintmax_t	ud;
 }				t_type;
+
+int 	ft_putwchar(wchar_t w);
 
 /*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
 /*┃                               ft_printf.c                               ┃*/

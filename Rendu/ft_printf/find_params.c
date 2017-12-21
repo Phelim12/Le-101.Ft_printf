@@ -26,7 +26,7 @@ void	ft_find_flags(char specs, t_params *ptr)
 	if (specs == '0' && ptr->flag_point == FALSE)
 		ptr->flag_zero = TRUE;
 	if (specs == '.')
-		ptr->flag_point = TRUE;
+		ptr->flag_point++;
 }
 
 int		ft_find_width(char *specs, t_params *ptr)
@@ -82,6 +82,8 @@ int		ft_find_size(char *specs, t_params *ptr)
 		ptr->size_type = 'H';
 		ret = 1;
 	}
+	else if (ft_strchr("jz", *(specs - 1)) && ft_strchr("jzhl", *(specs)))
+		ptr->size_type = ptr->size_type;
 	else
 		ptr->size_type = *specs;
 	return (ret);
@@ -104,5 +106,7 @@ int		ft_find_params(char *specs, t_params *ptr)
 		ptr->flag_zero = FALSE;
 	if (ptr->size_precision > 0 && ptr->flag_zero == TRUE)
 		ptr->flag_zero = FALSE;
+	if (ptr->flag_point > 1)
+		ptr->size_precision = 0;
 	return (ret);
 }

@@ -60,7 +60,7 @@ int	ft_check_sign(t_type all_type, t_params *flags, char type, int first)
 		return (ft_print_sign(all_type, flags, type));
 	if (flags->flag_more == TRUE || all_type.d < 0)
 		return (ft_print_sign(all_type, flags, type));
-	if (flags->flag_space == TRUE && (type == 'd' || type == 'i') && !(first) && flags->size_precision <= 0)
+	if (flags->flag_space == TRUE && (type == 'd' || type == 'i') && !(first) && flags->size_precision < 0)
 		return (ft_putchar(' '));
 	return (0);
 }
@@ -139,7 +139,7 @@ int		ft_print_flags(t_type all_type, t_params flags, char type)
 	int ret;
 
 	ret = 0;
-	if ((flags.size_precision) > 0 && (type == 's'))
+	if (flags.size_precision > 0 && (type == 's'))
 	{
 		all_type.str[flags.size_precision] = 0;
 		flags.len_arg = ft_strlen(all_type.str);
@@ -159,6 +159,8 @@ int		ft_print_params(va_list ap, t_params flags, char type)
 {
 	t_type all_type;
 
+	if (!(ft_strchr(PRINTF_TYPE, type)) && type)
+		return (ft_putwchar((wchar_t)type));
 	reset_all_type(&all_type);
 	ft_search_arg(ap, &all_type, &flags, type);
 	return (ft_print_flags(all_type, flags, type));

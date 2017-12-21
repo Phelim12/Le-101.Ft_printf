@@ -36,11 +36,14 @@ int 	ft_vdprintf(int fd, const char *format, va_list ap)
 	{
 		if (format[cur] == '%')
 		{
-			while (format[++cur] && !(ft_strchr(PRINTF_TYPE, format[cur])))
+			while (format[++cur] && ft_strchr(PRINTF_SPECS, format[cur]))
 				cur += ft_find_params((char *)(format + cur), &params);
-			ret += ft_print_params(ap, params, format[cur]);
-			params = reset_params(&ret, &cur, FALSE);
-			cur++;
+			if (format[cur])
+			{
+				ret += ft_print_params(ap, params, format[cur]);
+				params = reset_params(&ret, &cur, FALSE);
+				cur++;
+			}
 		}
 		else
 		{
