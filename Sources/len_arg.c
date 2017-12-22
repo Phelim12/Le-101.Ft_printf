@@ -29,10 +29,10 @@ int		ft_len_conv(t_type all_type, t_params flags, char type)
 		return (ft_len_base_llu((uintmax_t)all_type.c, "0123456789ABCDEF"));
 	if (flags.size_type == 'H' && (type == 'o' || type == 'O'))
 		return (ft_len_base_llu((uintmax_t)all_type.c, "01234567"));
-	if (type == 'x' || type == 'X')
-		return (ft_len_base_llu((uintmax_t)all_type.d, "0123456789ABCDEF"));
+	if (type == 'x' || type == 'X' || type == 'p')
+		return (ft_len_base_llu((uintmax_t)all_type.ud, "0123456789ABCDEF"));
 	if (type == 'o' || type == 'O')
-		return (ft_len_base_llu((uintmax_t)all_type.d, "01234567"));
+		return (ft_len_base_llu((uintmax_t)all_type.ud, "01234567"));
 	return (0);
 }
 
@@ -43,14 +43,16 @@ int		ft_len_arg(t_type all_type, t_params flags, char type)
 	prefix = 0;
 	if (type == '%')
 		return (1);
-	if ((type == 'X' || type == 'x') && flags.flag_hashtag == TRUE)
+	if ((type == 'X' || type == 'x') && flags.flag_hashtag > 0)
 		prefix = 2;
 	if ((((type == 'O' || type == 'o') && flags.flag_hashtag == TRUE)) ||
-	 (flags.flag_more == TRUE || all_type.d < 0))
+	 (flags.flag_more == TRUE || all_type.d < 0) || (flags.flag_space == TRUE && flags.flag_more == FALSE && flags.size_precision < ft_lenint_max(all_type.d, 0)))
 		prefix = 1;
-	if (type == 'S')
+	if (flags.flag_hashtag == 2 && all_type.ud == 0)
+		prefix = 0;
+	if (type == 'S' && all_type.wstr)
 		return (ft_wstrlen(all_type.wstr));
-	if (type == 's' && all_type.str != NULL)
+	if (type == 's' && all_type.str)
 		return (ft_strlen(all_type.str));
 	if (type == 'c' || type == 'C')
 		return (1);
@@ -64,5 +66,8 @@ int		ft_len_arg(t_type all_type, t_params flags, char type)
 	}
 	if (type == 'U' || type == 'u')
 		return (ft_lenuint_max(all_type.ud));
-	return (0);
+	if (!(ft_strchr(PRINTF_TYPE, type)))
+		return (1);
+	else
+		return (0);
 }

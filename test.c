@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_putnbr_base_llu.c                              .::    .:/ .      .::   */
+/*   test.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 19:16:44 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/12 19:16:44 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/21 20:26:33 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/12/21 20:26:33 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "Sources/ft_printf.h"
+#include <limits.h>
+#include <locale.h>
 
-int		ft_putnbr_base_llu(unsigned long long int nbr, char *base)
+int main(int argc, char const *argv[])
 {
-	char str[256];
-	int neg;
-	int a;
-	int b;
-
-	b = 0;
-	neg = 1;
-	a = ft_strlen(base);
-	while (nbr >= 1)
-	{
-		str[b] = base[nbr % a];
-		nbr /= a;
-		b++;
-	}
-	str[b] = '\0';
-	if (ft_check_base(base, 0, 1))
-		ft_print_base(str, neg);
-	if (ft_strlen(str) == 0)
-		return (-1);
-	return (ft_strlen(str));
+	setlocale(LC_ALL, "en_US.UTF-8");
+	char c;
+	
+	printf("\nft_printf = -%d-  \n", ft_printf("{%#.5x}", 1));
+	printf("\nprintf = -%d-  \n", printf("{%#.5x}", 1));
+	return 0;
 }

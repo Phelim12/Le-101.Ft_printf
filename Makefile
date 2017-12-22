@@ -35,6 +35,7 @@ OBJS = $(addprefix $(DIR_OBJ)/,$(SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS)
+	@make -C $(DIR_LIB)
 	@cp libft/libft.a ./$(NAME)
 	@ar -rcs $(NAME) $(OBJS)
 	@echo "\033[0;32m✅️    $(NAME) created."
@@ -46,10 +47,12 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
 
 clean:
 	@rm -rf $(DIR_OBJ)
+	@make clean -C $(DIR_LIB)
 	@echo "\033[0;31m🗑️    Deleting object files." 
 
 fclean: clean
 	@rm -f $(NAME)
+	@make fclean -C $(DIR_LIB)
 	@echo "\033[0;31m🗑️    Deleting $(NAME) executable." 
 
 re: fclean all

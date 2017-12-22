@@ -34,6 +34,7 @@ int 	ft_vdprintf(int fd, const char *format, va_list ap)
 	params = reset_params(&ret, &cur, TRUE);
 	while (format[cur])
 	{
+		//printf("1 %d\n", ret);
 		if (format[cur] == '%')
 		{
 			while (format[++cur] && ft_strchr(PRINTF_SPECS, format[cur]))
@@ -46,10 +47,7 @@ int 	ft_vdprintf(int fd, const char *format, va_list ap)
 			}
 		}
 		else
-		{
-			ft_putchar(format[cur++]);
-			ret++;
-		}
+			ret += ft_putchar(format[cur++]);
 	}
 	return (ret);
 }

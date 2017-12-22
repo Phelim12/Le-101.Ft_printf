@@ -36,7 +36,7 @@ SRC = ft_lenint_max.c ft_strnew.c ft_atoi.c ft_isprint.c ft_memalloc.c \
 	ft_strlcat.c ft_putnbr_base_llu.c ft_strncpy.c ft_toupper.c ft_isdigit.c \
 	ft_lstiter.c ft_next_sqrt.c ft_strclr.c ft_strlen.c ft_putnbr_u.c \
 	ft_strnequ.c get_next_line.c ft_islower.c ft_lstnew.c ft_putchar_fd.c \
-	ft_strcmp.c ft_strmap.c ft_putnbr_llu.c			
+	ft_strcmp.c ft_strmap.c ft_putnbr_llu.c	ft_putnbr_base_hd.c 	
 
 all: $(NAME)
 

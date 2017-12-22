@@ -21,7 +21,6 @@
 # define PRINTF_TYPE "sSpdDioOuUxXcC%"
 # define PRINTF_SPECS "#0-+ 123456789.hljz"
 
-
 /*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
 /*┃         This structure groups all the parameters of the argument        ┃*/
 /*┃                           passed to ft_printf                           ┃*/
@@ -80,11 +79,11 @@ int				ft_find_params(char *specs, t_params *ptr);
 /*┃                              search_arg.c                               ┃*/
 /*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
 
-void			ft_arg_str(va_list ap, t_type *all_type, char type);
-void			ft_arg_char(va_list ap, t_type *all_type, char type);
+void			ft_arg_str(va_list ap, t_type *all_type, char size_type, char *type);
+void			ft_arg_char(va_list ap, t_type *all_type, char size_type, char *type);
 void			ft_arg_ll(va_list ap, t_type *all_type, char size_type, char type);
 void			ft_arg_int(va_list ap, t_type *all_type, char size_type, char type);
-void			ft_search_arg(va_list ap, t_type *all_type, t_params *p, char type);
+void			ft_search_arg(va_list ap, t_type *all_type, t_params *p, char *type);
 
 /*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
 /*┃                                 reset.c                                 ┃*/
@@ -92,7 +91,6 @@ void			ft_search_arg(va_list ap, t_type *all_type, t_params *p, char type);
 
 void			reset_all_type(t_type *all_type);
 t_params		reset_params(int *ptr1, int *ptr2, int first);
-
 
 /*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
 /*┃                               print_arg.c                               ┃*/
@@ -102,14 +100,14 @@ int 			ft_putwchar(wchar_t w);
 int 			ft_wchar_two(wchar_t w);
 int 			ft_wchar_four(wchar_t w);
 int 			ft_wchar_three(wchar_t w);
-int 			ft_putwstr(wchar_t *wstr);
-int 			ft_print_ptr(uintmax_t ud);
-int 			ft_print_str(t_type all_type, char type);
+int 			ft_putwstr(wchar_t *wstr, int stop);
+int 			ft_print_ptr(uintmax_t ud, t_params flags);
+int 			ft_print_str(t_type all_type, t_params flags, char type);
 int 			ft_print_char(t_type all_type, char type);
-int 			ft_print_majx(intmax_t d, t_params flags);
-int 			ft_print_minx(intmax_t d, t_params flags);
+int 			ft_print_majx(uintmax_t ud, t_params flags);
+int 			ft_print_minx(uintmax_t ud, t_params flags);
 int				ft_print_utf(unsigned char *str, int cur);
-int 			ft_print_octal(intmax_t d, t_params flags);
+int 			ft_print_octal(uintmax_t ud, t_params flags);
 int				ft_print_arg(t_type all_type, t_params flags, char type);
 int 			ft_print_int(t_type all_type, t_params flags, char type, int ret);
 

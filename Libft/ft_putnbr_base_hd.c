@@ -1,49 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_putnbr_base_u.c                              .::    .:/ .      .::   */
+/*   ft_putnbr_base_hd.c                              .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 19:16:44 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/12 19:16:44 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/21 21:41:58 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/12/21 21:41:58 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_base(char *str, int neg)
-{
-	int a;
-
-	if (neg < 0)
-		ft_putchar('-');
-	a = ft_strlen(str);
-	a--;
-	while (str[a])
-	{
-		ft_putchar(str[a]);
-		a--;
-	}
-}
-
-int		ft_check_base(char *base, int a, int b)
-{
-	if (ft_strlen(base) == 1)
-		return (0);
-	while (base[b])
-	{
-		if (base[a] == base[b])
-			return (0);
-		if (base[b] == '+' || base[b] == '-')
-			return (0);	
-		b++;
-	}
-	return (1);
-}
-
-int 	ft_putnbr_base_u(unsigned int nbr, char *base)
+int		ft_putnbr_base_hd(short int nbr, char *base)
 {
 	char str[256];
 	int neg;

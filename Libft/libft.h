@@ -138,12 +138,13 @@ void			*ft_memccpy(void *d, const void *s, int c, size_t n);
 **	The functions returns a void .
 */
 
-void			ft_putnbr_base_llu(unsigned long long int nbr, char *base);
+int			ft_putnbr_base_hd(short int nbr, char *base);
+int			ft_putnbr_base_llu(unsigned long long int nbr, char *base);
 void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void			ft_striteri(char *s, void (*f)(unsigned int, char *));
 void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void			ft_putnbr_base_ll(long long int nbr, char *base);
-void			ft_putnbr_base_u(unsigned int nbr, char *base);
+int			ft_putnbr_base_u(unsigned int nbr, char *base);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 void			ft_putnbr_llu(unsigned long long int n);
 void			ft_striter(char *s, void (*f)(char *));
