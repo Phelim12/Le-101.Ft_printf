@@ -31,7 +31,7 @@ int		ft_print_precision(t_type *all_type, t_params *flags, char type)
 	return (ret);
 }
 
-int ft_print_sign(t_type all_type, t_params *flags, char type)
+int		ft_print_sign(t_type all_type, t_params *flags, char type)
 {
 	char sign;
 
@@ -46,24 +46,6 @@ int ft_print_sign(t_type all_type, t_params *flags, char type)
 		flags->print_sign = FALSE;
 		return (ft_putchar(sign));
 	}
-	return (0);
-}
-
-int	ft_check_sign(t_type all_type, t_params *flags, char type, int first)
-{
-	int len_width;
-
-	if (!(ft_strchr("diu", type)))
-		return (0);
-	len_width = (flags->size_width - flags->len_arg);
-	if (first == TRUE && flags->flag_zero == FALSE && len_width > 0)
-		return (0);
-	if (first == TRUE && flags->flag_zero == TRUE && (flags->flag_more == TRUE || all_type.d < 0))
-		return (ft_print_sign(all_type, flags, type));
-	if (flags->flag_more == TRUE || all_type.d < 0)
-		return (ft_print_sign(all_type, flags, type));
-	if (flags->flag_space == TRUE && (type == 'd' || type == 'i') && first && flags->size_precision < 0)
-		return (ft_putchar(' '));
 	return (0);
 }
 
@@ -90,50 +72,22 @@ int		ft_print_prefix(t_type a, t_params *flags, char type)
 	return (0);
 }
 
-int		ft_len_precision(t_type all_type, t_params flags, char type)
-{
-	int ret;
-
-	ret = 0;
-	if (!(ft_strchr("diouxX", type)))
-		return (0);
-	flags.size_precision -= flags.len_arg;
-	if (flags.flag_more == TRUE || all_type.d < 0)
-		flags.size_precision++;
-	while (flags.size_precision-- > 0)
-		ret++;
-	return (ret);
-}
-
 int		ft_print_width(t_type all_type, t_params *flags, char type)
 {
 	int ret;
-	int sub;
 
-	sub = 0;
 	ret = 0;
-	if ((flags->size_width + flags->len_arg) <= (flags->size_precision) && (type != 's' || type != 's'))
-		flags->size_width = 0;
-	else if ((type == 'd' || type == 'i') && flags->len_arg < flags->size_precision)
-	{
-		sub = flags->size_precision;
-		if (all_type.d < 0)
-			sub++;
-	}
-	else
-		sub = (flags->len_arg + (ft_len_precision(all_type, *flags, type)));
-	flags->size_width -= sub;
+	if (flags->flag_less == FALSE)
+		flags->size_width -= ft_modify_width(all_type, *flags, type);
 	while (flags->flag_less == FALSE && flags->size_width-- > 0)
 	{
 		if (flags->flag_zero == TRUE)
-			ft_putchar('0');
+			ret += ft_putchar('0');
 		else
-			ft_putchar(' ');
-		ret++;
+			ret += ft_putchar(' ');
 	}
 	if (flags->flag_less == TRUE)
 	{
-		flags->size_width += sub;
 		flags->flag_zero = FALSE;
 		flags->flag_less = FALSE;
 	}
@@ -158,10 +112,7 @@ int		ft_print_flags(t_type all_type, t_params flags, char type)
 	ret += ft_print_width(all_type, &flags, type);
 	ret += ft_print_prefix(all_type, &flags, type);
 	ret += ft_check_sign(all_type, &flags, type, 0);
-	if (!(ft_strchr(PRINTF_TYPE, type)))
-		ret += ft_putchar(type);
-	else
-		ret += ft_print_precision(&all_type, &flags, type);
+	ret += ft_print_precision(&all_type, &flags, type);
 	ret += ft_print_arg(all_type, flags, type);
 	ret += ft_print_width(all_type, &flags, type);
 	return (ret);

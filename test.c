@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
 	setlocale(LC_ALL, "en_US.UTF-8");
 	char c;
 	
-	printf("\nft_printf = -%d-  \n", ft_printf("{%#.5x}", 1));
-	printf("\nprintf = -%d-  \n", printf("{%#.5x}", 1));
+	printf("\nft_printf = -%d-  \n", ft_printf("{%05.S}", L"42 c est cool"));
+	printf("\nprintf = -%d-  \n",  printf("{%05.S}", L"42 c est cool"));
 	return 0;
 }

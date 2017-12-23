@@ -19,22 +19,20 @@ int		ft_printf(const char *format, ...)
 	int		a;
 
 	va_start(ap, format);
-	a = ft_vdprintf(1, format, ap);
+	a = ft_vdprintf(format, ap);
 	va_end(ap);
 	return (a);
 }
 
-int 	ft_vdprintf(int fd, const char *format, va_list ap)
+int 	ft_vdprintf(const char *format, va_list ap)
 {
 	t_params	params;
 	int 		cur;
 	int			ret;
 
-	(void)fd;
 	params = reset_params(&ret, &cur, TRUE);
 	while (format[cur])
 	{
-		//printf("1 %d\n", ret);
 		if (format[cur] == '%')
 		{
 			while (format[++cur] && ft_strchr(PRINTF_SPECS, format[cur]))

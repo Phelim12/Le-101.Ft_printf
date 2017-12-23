@@ -21,10 +21,12 @@
 # define PRINTF_TYPE "sSpdDioOuUxXcC%"
 # define PRINTF_SPECS "#0-+ 123456789.hljz"
 
-/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
-/*┃         This structure groups all the parameters of the argument        ┃*/
-/*┃                           passed to ft_printf                           ┃*/
-/*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃         This structure groups all the parameters of the argument        ┃
+**┃                           passed to ft_printf                           ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
 typedef struct	s_params
 {
@@ -63,7 +65,7 @@ typedef struct	s_type
 /*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
 
 int				ft_printf(const char *format, ...);
-int				ft_vdprintf(int fd, const char *format, va_list ap);
+int				ft_vdprintf(const char *format, va_list ap);
 
 /*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
 /*┃                              find_params.c                              ┃*/

@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 void	ft_find_flags(char specs, t_params *ptr)
 {
@@ -32,7 +32,7 @@ void	ft_find_flags(char specs, t_params *ptr)
 int		ft_find_width(char *specs, t_params *ptr)
 {
 	int		cursor;
-	int 	ret;
+	int		ret;
 	char	*nb;
 
 	ret = 0;
@@ -51,7 +51,7 @@ int		ft_find_width(char *specs, t_params *ptr)
 int		ft_find_precision(char *specs, t_params *ptr)
 {
 	int		cursor;
-	int 	ret;
+	int		ret;
 	char	*nb;
 
 	ret = 0;
