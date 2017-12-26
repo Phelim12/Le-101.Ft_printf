@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 int		ft_print_precision(t_type *all_type, t_params *flags, char type)
 {
@@ -97,23 +97,17 @@ int		ft_print_width(t_type all_type, t_params *flags, char type)
 int		ft_print_flags(t_type all_type, t_params flags, char type)
 {
 	int ret;
+	int save;
 
 	ret = 0;
-	if ((type == 's') && flags.flag_point > 0 && all_type.str)
-	{
-		if (flags.size_precision > 0)
-			all_type.str = ft_strsub(all_type.str, 0, flags.size_precision);
-		else
-			all_type.str = ft_strsub(all_type.str, 0, 0);
-		flags.len_arg = ft_strlen(all_type.str);
-	}
+	save = flags.size_precision;
 	ret += ft_check_sign(all_type, &flags, type, 1);
 	ret += ft_print_prefix(all_type, &flags, type);
 	ret += ft_print_width(all_type, &flags, type);
 	ret += ft_print_prefix(all_type, &flags, type);
 	ret += ft_check_sign(all_type, &flags, type, 0);
 	ret += ft_print_precision(&all_type, &flags, type);
-	ret += ft_print_arg(all_type, flags, type);
+	ret += ft_print_arg(all_type, flags, type, save);
 	ret += ft_print_width(all_type, &flags, type);
 	return (ret);
 }
@@ -124,5 +118,7 @@ int		ft_print_params(va_list ap, t_params flags, char type)
 
 	reset_all_type(&all_type);
 	ft_search_arg(ap, &all_type, &flags, &type);
+	if (ft_strchr("sS", type))
+		ft_modify_string(&all_type, &flags, type);
 	return (ft_print_flags(all_type, flags, type));
 }

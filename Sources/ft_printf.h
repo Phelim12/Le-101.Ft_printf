@@ -5,8 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/08 19:51:38 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/08 19:51:38 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/26 16:46:29 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2017/12/26 16:46:29 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,6 +20,8 @@
 
 # define PRINTF_TYPE "sSpdDioOuUxXcC%"
 # define PRINTF_SPECS "#0-+ 123456789.hljz"
+# define UIMAX uintmax_t
+# define IMAX intmax_t
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -30,108 +32,148 @@
 
 typedef struct	s_params
 {
-	char		flag_hashtag;
-	char		flag_space;
-	char		flag_zero;
-	char		flag_less;
-	char		flag_more;
-	char		flag_point;
-	char		size_type;
-	char        new_type;
-	int			print_sign;
-	int			print_prefix;
-	int			size_width;
-	int			size_precision;
-	int			len_arg;
+	char	flag_hashtag;
+	char	flag_space;
+	char	flag_zero;
+	char	flag_less;
+	char	flag_more;
+	char	flag_point;
+	char	size_type;
+	char	new_type;
+	int		print_sign;
+	int		print_prefix;
+	int		size_width;
+	int		size_precision;
+	int		len_arg;
 }				t_params;
 
-/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
-/*┃      This structure groups all the types of variables that will be      ┃*/
-/*┃                        used when using ft_printf                        ┃*/
-/*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃      This structure groups all the types of variables that will be      ┃
+**┃                        used when using ft_printf                        ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
 typedef struct	s_type
 {
-	char		c;
-	char		*str;
-	wchar_t		wc;
-	wchar_t		*wstr;
-	intmax_t	d;
-	uintmax_t	ud;
+	char	c;
+	char	*str;
+	wchar_t	wc;
+	wchar_t	*wstr;
+	IMAX	d;
+	UIMAX	ud;
 }				t_type;
 
-/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
-/*┃                               ft_printf.c                               ┃*/
-/*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                               ft_putwchar.c                             ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-int				ft_printf(const char *format, ...);
-int				ft_vdprintf(const char *format, va_list ap);
+int			ft_print_utf(unsigned char *str, int cur);
+int			ft_wchar_two(wchar_t w);
+int			ft_wchar_three(wchar_t w);
+int			ft_wchar_four(wchar_t w);
+int			ft_putwchar(wchar_t w);
 
-/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
-/*┃                              find_params.c                              ┃*/
-/*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                               modify_flags.c                            ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-void			ft_find_flags(char specs, t_params *ptr);
-int				ft_find_width(char *specs, t_params *ptr);
-int				ft_find_precision(char *specs, t_params *ptr);
-int				ft_find_size(char *specs, t_params *ptr);
-int				ft_find_params(char *specs, t_params *ptr);
+void		ft_modify_params(t_params *p, char *type);
+int			ft_check_sign(t_type all_type, t_params *flags, char type, int first);
+int			ft_modify_width(t_type all_type, t_params flags, char type);
+void		ft_modify_string(t_type *all_type, t_params *flags, char type);
 
-/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
-/*┃                              search_arg.c                               ┃*/
-/*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                               ft_printf.c                               ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-void			ft_arg_str(va_list ap, t_type *all_type, char size_type, char *type);
-void			ft_arg_char(va_list ap, t_type *all_type, char size_type, char *type);
-void			ft_arg_ll(va_list ap, t_type *all_type, char size_type, char type);
-void			ft_arg_int(va_list ap, t_type *all_type, char size_type, char type);
-void			ft_search_arg(va_list ap, t_type *all_type, t_params *p, char *type);
+int			ft_printf(const char *format, ...);
+int			ft_vdprintf(const char *format, va_list ap);
 
-/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
-/*┃                                 reset.c                                 ┃*/
-/*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                              find_params.c                              ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-void			reset_all_type(t_type *all_type);
-t_params		reset_params(int *ptr1, int *ptr2, int first);
+void		ft_find_flags(char specs, t_params *ptr);
+int			ft_find_width(char *specs, t_params *ptr);
+int			ft_find_precision(char *specs, t_params *ptr);
+int			ft_find_size(char *specs, t_params *ptr);
+int			ft_find_params(char *specs, t_params *ptr);
 
-/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
-/*┃                               print_arg.c                               ┃*/
-/*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                              search_arg.c                               ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-int 			ft_putwchar(wchar_t w);
-int 			ft_wchar_two(wchar_t w);
-int 			ft_wchar_four(wchar_t w);
-int 			ft_wchar_three(wchar_t w);
-int 			ft_putwstr(wchar_t *wstr, int stop);
-int 			ft_print_ptr(uintmax_t ud, t_params flags);
-int 			ft_print_str(t_type all_type, t_params flags, char type);
-int 			ft_print_char(t_type all_type, char type);
-int 			ft_print_majx(uintmax_t ud, t_params flags);
-int 			ft_print_minx(uintmax_t ud, t_params flags);
-int				ft_print_utf(unsigned char *str, int cur);
-int 			ft_print_octal(uintmax_t ud, t_params flags);
-int				ft_print_arg(t_type all_type, t_params flags, char type);
-int 			ft_print_int(t_type all_type, t_params flags, char type, int ret);
+void		ft_arg_str(va_list ap, t_type *all_type, char size_type, char *type);
+void		ft_arg_char(va_list ap, t_type *all_type, char size_type, char *type);
+void		ft_arg_ll(va_list ap, t_type *all_type, char size_type, char type);
+void		ft_arg_int(va_list ap, t_type *all_type, char size_type, char type);
+void		ft_search_arg(va_list ap, t_type *all_type, t_params *p, char *type);
 
-/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
-/*┃                                len_arg.c                                ┃*/
-/*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                 reset.c                                 ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-int 			ft_wstrlen(wchar_t *wstr);
-int				ft_len_conv(t_type all_type, t_params flags, char type);
-int				ft_len_arg(t_type all_type, t_params flags, char type);
+void		reset_all_type(t_type *all_type);
+t_params	reset_params(int *ptr1, int *ptr2, int first);
 
-/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓*/
-/*┃                              print_params.c                             ┃*/
-/*┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                               print_arg.c                               ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
 
-int				ft_print_prefix(t_type a, t_params *flags, char type);
-int				ft_print_params(va_list ap, t_params flags, char type);
-int				ft_print_flags(t_type all_type, t_params flags, char type);
-int 			ft_print_sign(t_type all_type, t_params *flags, char type);
-int				ft_print_width(t_type all_type, t_params *flags, char type);
-int				ft_len_precision(t_type all_type, t_params flags, char type);
-int				ft_print_precision(t_type *all_type, t_params *flags, char type);
-int				ft_check_sign(t_type all_type, t_params *flags, char type, int first);
+int			ft_putwchar(wchar_t w);
+int			ft_wchar_two(wchar_t w);
+int			ft_wchar_four(wchar_t w);
+int			ft_wchar_three(wchar_t w);
+int			ft_putwstr(wchar_t *wstr);
+int			ft_print_ptr(uintmax_t ud, t_params flags);
+int			ft_print_str(t_type all_type, t_params flags, char type);
+int			ft_print_char(t_type all_type, char type);
+int			ft_print_majx(uintmax_t ud, t_params flags);
+int			ft_print_minx(uintmax_t ud, t_params flags);
+int			ft_print_utf(unsigned char *str, int cur);
+int			ft_print_octal(uintmax_t ud, t_params flags);
+int			ft_print_arg(t_type all_type, t_params flags, char type, int save);
+int			ft_print_int(t_type all_type, t_params flags, char type, int ret);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                                len_arg.c                                ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+int			ft_wstrlen(wchar_t *wstr);
+int			ft_len_conv(t_type all_type, t_params flags, char type);
+int			ft_len_arg(t_type all_type, t_params flags, char type);
+int			ft_len_precision(t_type all_type, t_params flags, char type);
+
+/*
+**┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+**┃                              print_params.c                             ┃
+**┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+*/
+
+int			ft_print_prefix(t_type a, t_params *flags, char type);
+int			ft_print_params(va_list ap, t_params flags, char type);
+int			ft_print_flags(t_type all_type, t_params flags, char type);
+int			ft_print_sign(t_type all_type, t_params *flags, char type);
+int			ft_print_width(t_type all_type, t_params *flags, char type);
+int			ft_len_precision(t_type all_type, t_params flags, char type);
+int			ft_print_precision(t_type *all_type, t_params *flags, char type);
+int			ft_check_sign(t_type all_type, t_params *flags, char type, int first);
 
 #endif

@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 int		ft_printf(const char *format, ...)
 {
@@ -24,10 +24,10 @@ int		ft_printf(const char *format, ...)
 	return (a);
 }
 
-int 	ft_vdprintf(const char *format, va_list ap)
+int		ft_vdprintf(const char *format, va_list ap)
 {
 	t_params	params;
-	int 		cur;
+	int			cur;
 	int			ret;
 
 	params = reset_params(&ret, &cur, TRUE);

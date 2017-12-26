@@ -16,11 +16,31 @@
 int		ft_wstrlen(wchar_t *wstr)
 {
 	int cur;
+	int ret;
 
+	ret = 0;
 	cur = 0;
 	while (wstr[cur])
+	{
+		ret += ft_size_wchar(wstr[cur]);
 		cur++;
-	return (cur);
+	}
+	return (ret);
+}
+
+int		ft_len_precision(t_type all_type, t_params flags, char type)
+{
+	int ret;
+
+	ret = 0;
+	if (!(ft_strchr("diouxX", type)))
+		return (0);
+	flags.size_precision -= flags.len_arg;
+	if (flags.flag_more == TRUE || all_type.d < 0)
+		flags.size_precision++;
+	while (flags.size_precision-- > 0)
+		ret++;
+	return (ret);
 }
 
 int		ft_size_prefix(t_type all_type, t_params flags, char type)
@@ -35,7 +55,8 @@ int		ft_size_prefix(t_type all_type, t_params flags, char type)
 	if ((flags.flag_more == TRUE || all_type.d < 0))
 		return (1);
 	if (flags.flag_space == TRUE && flags.flag_more == FALSE &&
-		flags.size_precision < ft_lenint_max(all_type.d, 0))
+		(flags.size_precision < ft_lenint_max(all_type.d, 0)) &&
+		(flags.flag_point == TRUE || flags.flag_point == FALSE))
 		return (1);
 	return (0);
 }
@@ -63,6 +84,9 @@ int		ft_len_arg(t_type all_type, t_params flags, char type)
 {
 	int prefix;
 
+	if (type == 'x' && flags.flag_hashtag == 2 && all_type.ud == 0
+		&& flags.flag_point && flags.size_precision >= 1)
+		return (0);
 	prefix = ft_size_prefix(all_type, flags, type);
 	if (type == 'S' && all_type.wstr)
 		return (ft_wstrlen(all_type.wstr));

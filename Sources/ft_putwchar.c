@@ -24,7 +24,7 @@ int		ft_print_utf(unsigned char *str, int cur)
 	return (ret);
 }
 
-int 	ft_wchar_two(wchar_t w)
+int		ft_wchar_two(wchar_t w)
 {
 	unsigned char *tmp;
 
@@ -34,7 +34,7 @@ int 	ft_wchar_two(wchar_t w)
 	return (ft_print_utf(tmp, 2));
 }
 
-int 	ft_wchar_three(wchar_t w)
+int		ft_wchar_three(wchar_t w)
 {
 	unsigned char *tmp;
 
@@ -50,7 +50,7 @@ int 	ft_wchar_three(wchar_t w)
 	return (ft_print_utf(tmp, 3));
 }
 
-int 	ft_wchar_four(wchar_t w)
+int		ft_wchar_four(wchar_t w)
 {
 	unsigned char *tmp;
 
@@ -69,7 +69,7 @@ int 	ft_wchar_four(wchar_t w)
 	return (ft_print_utf(tmp, 4));
 }
 
-int 	ft_putwchar(wchar_t w)
+int		ft_putwchar(wchar_t w)
 {
 	if (w >= 0 && w <= 127)
 		return (ft_putchar((char)w));
@@ -80,4 +80,19 @@ int 	ft_putwchar(wchar_t w)
 	else if (w >= 65536 && w <= 2097151)
 		return (ft_wchar_four(w));
 	return (0);
+}
+
+int		ft_putwstr(wchar_t *wstr)
+{
+	int ret;
+	int cur;
+
+	ret = 0;
+	cur = 0;
+	while (wstr[cur])
+	{
+		ret += ft_putwchar(wstr[cur]);
+		cur++;
+	}
+	return (ret);
 }

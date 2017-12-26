@@ -81,7 +81,7 @@ char			*ft_strsub(char const *s, unsigned int start, size_t len);
 /*
 **	The functions returns an int .
 */
-
+int				ft_size_wchar(wchar_t w);
 int				ft_strncmp(const char *s1, const char *s2, unsigned int n);
 int				ft_strnequ(char const *s1, char const *s2, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -122,6 +122,14 @@ size_t			ft_strlcat(char *d, const char *s, size_t n);
 */
 
 t_list			*ft_lstnew(void const *content, size_t content_size);
+
+
+/*
+**	The functions returns a wchar_t * .
+*/
+
+wchar_t			*ft_wstrncpy(wchar_t *d, const wchar_t *s, size_t n);
+wchar_t			*ft_wstrsub(wchar_t const *s, unsigned int start, size_t len);
 
 /*
 **	The functions returns a void * .

@@ -13,25 +13,6 @@
 
 #include "ft_printf.h"
 
-void	ft_modify_params(t_params *p, char *type)
-{
-	if (ft_strchr("DOU", *type))
-	{
-		*type += 32;
-		p->size_type = 'L';
-	}
-	if (*type == 'p')
-	{
-		*type = 'x';
-		p->size_type = 'L';
-		p->flag_hashtag = 2;
-	}
-	if (*type == 'c' && p->size_type == 'l')
-		*type = 'C';
-	if (*type == 's' && p->size_type == 'l')
-		*type = 'S';
-}
-
 void	ft_arg_str(va_list ap, t_type *all_type, char size_type, char *type)
 {
 	if (*type == 'S')
@@ -85,8 +66,8 @@ void	ft_search_arg(va_list ap, t_type *all_type, t_params *p, char *type)
 		ft_arg_int(ap, all_type, p->size_type, *type);
 	else if (!(ft_strchr(PRINTF_TYPE, *type)) && *type)
 	{
-		*type = 'C';
 		all_type->wc = (wchar_t)*type;
+		*type = 'C';
 	}
 	p->len_arg = ft_len_arg(*all_type, *p, *type);
 }

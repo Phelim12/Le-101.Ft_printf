@@ -13,24 +13,7 @@
 
 #include "ft_printf.h"
 
-int 	ft_putwstr(wchar_t *wstr, int stop)
-{
-	int ret;
-	int cur;
-
-	ret = 0;
-	cur = 0;
-	while (wstr[cur])
-	{
-		if (ret >= stop && stop > 0)
-			break ;
-		ret += ft_putwchar(wstr[cur]);
-		cur++;
-	}
-	return (ret);
-}
-
-int 	ft_print_nchar(t_type all_type, t_params flags, char type)
+int		ft_print_nchar(t_type all_type, t_params flags, char type)
 {
 	if (type == 'c')
 		return (ft_putchar(all_type.c));
@@ -46,12 +29,12 @@ int 	ft_print_nchar(t_type all_type, t_params flags, char type)
 	{
 		if (!(all_type.wstr) && flags.flag_point == FALSE)
 			return (ft_putstr("(null)"));
-		return (ft_putwstr(all_type.wstr, flags.size_precision));
+		return (ft_putwstr(all_type.wstr));
 	}
 	return (0);
 }
 
-int 	ft_print_conv(char *base, uintmax_t ud, t_params flags, char type)
+int		ft_print_conv(char *base, uintmax_t ud, t_params flags, char type)
 {
 	int ret;
 
@@ -71,7 +54,7 @@ int 	ft_print_conv(char *base, uintmax_t ud, t_params flags, char type)
 	return (ret);
 }
 
-int 	ft_print_int(t_type all_type, t_params flags, char type, int ret)
+int		ft_print_int(t_type all_type, t_params flags, char type, int ret)
 {
 	if (type == 'd' || type == 'i')
 	{
@@ -81,7 +64,7 @@ int 	ft_print_int(t_type all_type, t_params flags, char type, int ret)
 			ft_putnbr_hd((short int)all_type.d, 0);
 		else
 			ft_putnbr_ll(all_type.d, 0);
-		ret = ft_lenint_max(all_type.d, 0);	
+		ret = ft_lenint_max(all_type.d, 0);
 	}
 	else if (type == 'u')
 	{
@@ -99,11 +82,14 @@ int 	ft_print_int(t_type all_type, t_params flags, char type, int ret)
 	return (ret);
 }
 
-int		ft_print_arg(t_type all_type, t_params flags, char type)
+int		ft_print_arg(t_type all_type, t_params flags, char type, int save)
 {
 	int ret;
 
 	ret = 0;
+	if (type == 'x' && flags.flag_hashtag == 2 && all_type.ud == 0
+		&& flags.flag_point && save >= 1)
+		return (0);
 	if (type == '%')
 		return (ft_putchar('%'));
 	if (ft_strchr("cCsS", type))
