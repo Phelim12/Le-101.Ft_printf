@@ -26,18 +26,26 @@ int		ft_print_utf(unsigned char *str, int cur)
 
 int		ft_wchar_two(wchar_t w)
 {
-	unsigned char *tmp;
 
+	unsigned char 	*tmp;
+	int 			ret;
+
+	ret = 0;
 	tmp = (unsigned char *)ft_strnew(2);
 	tmp[0] = ((w >> 6) | 192);
 	tmp[1] = ((w ^ ((w >> 6) << 6)) | 128);
-	return (ft_print_utf(tmp, 2));
+	while (str[ret])
+		write(1, &str[ret++], 1);
+	free(tmp);
+	return (ret);
 }
 
 int		ft_wchar_three(wchar_t w)
 {
-	unsigned char *tmp;
+	unsigned char 	*tmp;
+	int 			ret;
 
+	ret = 0;
 	tmp = (unsigned char *)ft_strnew(3);
 	tmp[0] = ((w >> 12) | 224);
 	if (w >= 2048 && w <= 4095)
@@ -47,14 +55,18 @@ int		ft_wchar_three(wchar_t w)
 	else
 		tmp[1] = ((((w >> 6) ^ ((w >> 12) << 6))) | 128);
 	tmp[2] = ((w ^ ((w >> 6) << 6)) | 128);
-	return (ft_print_utf(tmp, 3));
+	while (str[ret])
+		write(1, &str[ret++], 1);
+	free(tmp);
+	return (ret);
 }
 
 int		ft_wchar_four(wchar_t w)
 {
-	unsigned char *tmp;
+	unsigned char 	*tmp;
+	int 			ret;
 
-	tmp = (unsigned char *)ft_strnew(4);
+	ret = 0;
 	tmp[0] = ((w >> 18) | 240);
 	if (w >= 65536 && w <= 131071)
 		tmp[1] = (((w >> 12) ^ 32) | 128);
@@ -66,7 +78,10 @@ int		ft_wchar_four(wchar_t w)
 		tmp[1] = ((((w >> 12) ^ ((w >> 18) << 6))) | 128);
 	tmp[2] = ((((w >> 6) ^ ((w >> 12) << 6))) | 128);
 	tmp[3] = ((w ^ ((w >> 6) << 6)) | 128);
-	return (ft_print_utf(tmp, 4));
+	while (str[ret])
+		write(1, &str[ret++], 1);
+	free(tmp);
+	return (ret);
 }
 
 int		ft_putwchar(wchar_t w)
@@ -80,19 +95,4 @@ int		ft_putwchar(wchar_t w)
 	else if (w >= 65536 && w <= 2097151)
 		return (ft_wchar_four(w));
 	return (0);
-}
-
-int		ft_putwstr(wchar_t *wstr)
-{
-	int ret;
-	int cur;
-
-	ret = 0;
-	cur = 0;
-	while (wstr[cur])
-	{
-		ret += ft_putwchar(wstr[cur]);
-		cur++;
-	}
-	return (ret);
 }

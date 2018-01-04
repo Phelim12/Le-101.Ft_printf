@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
@@ -17,10 +18,9 @@
 
 int main(int argc, char const *argv[])
 {
-	//setlocale(LC_ALL, "en_US.UTF-8");
+	setlocale(LC_ALL, "en_US.UTF-8");
 	//char c;
-	
-	printf("\nft_printf = -%d-  \n", ft_printf("{% 03d}", 0));
-	printf("\nprintf = -%d-  \n",  printf("{% 03d}", 0));
+
+	ft_printf("%x\n", 505);
 	return 0;
 }

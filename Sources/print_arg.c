@@ -13,12 +13,16 @@
 
 #include "ft_printf.h"
 
-int		ft_print_nchar(t_type all_type, t_params flags, char type)
+int		ft_print_txt(t_type all_type, t_params flags, char type)
 {
 	if (type == 'c')
-		return (ft_putchar(all_type.c));
+	{
+		if (ft_isascii(all_type.c))
+			return (ft_putchar(all_type.c));
+		return (write (1, &all_type.c, 1));
+	}
 	if (type == 'C')
-		return (ft_putwchar(all_type.wc));
+		return (ft_putchar(all_type.wc));
 	if (type == 's')
 	{
 		if (!(all_type.str) && flags.flag_point == FALSE)
@@ -38,19 +42,16 @@ int		ft_print_conv(char *base, uintmax_t ud, t_params flags, char type)
 {
 	int ret;
 
-	if (ft_strchr("jlzL", flags.size_type))
-		ret = ft_putnbr_base_llu(ud, base);
-	else
-		ret = ft_putnbr_base_u(ud, base);
-	if (ret == -1 && flags.flag_point == FALSE)
-	{
-		if (flags.flag_hashtag == TRUE && type == 'o')
-			return (0);
-		else
-			return (ft_putchar('0'));
-	}
-	if (ret == -1 && flags.flag_point == TRUE)
+	if (flags.flag_hashtag == TRUE && type == 'o' && ud == 0)
 		return (0);
+	if (flags.flag_point > 0 && ud == 0 && flags.size_width == -1)
+			return (ft_putchar(' '));
+	if (flags.flag_point > 0 && ud == 0)
+			return (0);
+	if (ft_strchr("jlzL", flags.size_type))
+		ret = ft_put_uintmax_base(ud, base);
+	else
+		ret = ft_put_uint_base(ud, base);
 	return (ret);
 }
 
@@ -61,17 +62,16 @@ int		ft_print_int(t_type all_type, t_params flags, char type, int ret)
 		if (flags.flag_point == TRUE && all_type.d == 0)
 			return (0);
 		if (flags.size_type == 'h')
-			ft_putnbr_hd((short int)all_type.d, 0);
+			ft_putnbr(FT_ABS(all_type.d));
 		else
-			ft_putnbr_ll(all_type.d, 0);
-		ret = ft_lenint_max(all_type.d, 0);
+			ft_put_uintmax(FT_ABS(all_type.d));
+		ret = ft_imaxlen(all_type.d);
 	}
 	else if (type == 'u')
 	{
 		if (flags.flag_point > 0 && all_type.ud == 0)
 			return (0);
-		ft_putnbr_llu(all_type.ud);
-		ret = ft_lenuint_max(all_type.ud);
+		ret = ft_put_uintmax_base(all_type.ud, "0123456789");
 	}
 	else if (type == 'o')
 		ret = ft_print_conv("01234567", all_type.ud, flags, type);
@@ -93,7 +93,7 @@ int		ft_print_arg(t_type all_type, t_params flags, char type, int save)
 	if (type == '%')
 		return (ft_putchar('%'));
 	if (ft_strchr("cCsS", type))
-		ret = ft_print_nchar(all_type, flags, type);
+		ret = ft_print_txt(all_type, flags, type);
 	else if (ft_strchr("diouxX", type))
 		ret = ft_print_int(all_type, flags, type, 0);
 	return (ret);

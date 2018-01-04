@@ -28,7 +28,7 @@ DIR_SRC = Sources
 DIR_OBJ = Objects
 
 SRCS = find_params.c ft_printf.c len_arg.c print_arg.c print_params.c reset.c \
-	search_arg.c modify_flags.c ft_putwchar.c
+	search_arg.c modify_flags.c
 
 OBJS = $(addprefix $(DIR_OBJ)/,$(SRCS:.c=.o))
 

@@ -55,7 +55,7 @@ int		ft_size_prefix(t_type all_type, t_params flags, char type)
 	if ((flags.flag_more == TRUE || all_type.d < 0))
 		return (1);
 	if (flags.flag_space == TRUE && flags.flag_more == FALSE &&
-		(flags.size_precision < ft_lenint_max(all_type.d, 0)) &&
+		(flags.size_precision < ft_imaxlen(all_type.d)) &&
 		(flags.flag_point == TRUE || flags.flag_point == FALSE))
 		return (1);
 	return (0);
@@ -64,19 +64,15 @@ int		ft_size_prefix(t_type all_type, t_params flags, char type)
 int		ft_len_conv(t_type all_type, t_params flags, char type)
 {
 	if (flags.size_type == 'H' && (type == 'x' || type == 'X'))
-		return (ft_len_base_llu(all_type.c, "0123456789ABCDEF"));
+		return (ft_imaxlen_base(all_type.c, 16));
 	if (flags.size_type == 'H' && (type == 'o' || type == 'O'))
-		return (ft_len_base_llu(all_type.c, "01234567"));
+		return (ft_imaxlen_base(all_type.c, 8));
 	if ((type == 'x' || type == 'X') && flags.flag_hashtag != 2)
-		return (ft_len_base_llu(all_type.ud, "0123456789ABCDEF"));
+		return (ft_umaxlen_base(all_type.ud, 16));
 	if (type == 'o' || type == 'O')
-		return (ft_len_base_llu(all_type.ud, "01234567"));
+		return (ft_umaxlen_base(all_type.ud, 8));
 	if (flags.flag_hashtag == 2)
-	{
-		if (!(ft_len_base_llu(all_type.ud, "0123456789ABCDEF")))
-			return (1);
-		return (ft_len_base_llu(all_type.ud, "0123456789ABCDEF"));
-	}
+		return (ft_umaxlen_base(all_type.ud, 16));
 	return (0);
 }
 
@@ -99,9 +95,9 @@ int		ft_len_arg(t_type all_type, t_params flags, char type)
 	if (ft_strchr("Ddi", type) && flags.flag_point && !(all_type.d))
 		return (0);
 	if (ft_strchr("Ddi", type))
-		return (ft_lenint_max(all_type.d, 0) + prefix);
+		return (ft_imaxlen(all_type.d) + prefix);
 	if (type == 'U' || type == 'u')
-		return (ft_lenuint_max(all_type.ud));
+		return (ft_umaxlen(all_type.ud));
 	if (!(ft_strchr(PRINTF_TYPE, type)) && type)
 		return (1);
 	else
