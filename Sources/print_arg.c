@@ -13,23 +13,23 @@
 
 #include "ft_printf.h"
 
-int		ft_print_txt(t_type all_type, t_params flags, char type)
+int		ft_print_txt(t_type all_type, t_params flags)
 {
-	if (type == 'c')
+	if (flags.type == 'c')
 	{
 		if (ft_isascii(all_type.c))
 			return (ft_putchar(all_type.c));
-		return (write (1, &all_type.c, 1));
+		return (write(1, &all_type.c, 1));
 	}
-	if (type == 'C')
+	if (flags.type == 'C')
 		return (ft_putchar(all_type.wc));
-	if (type == 's')
+	if (flags.type == 's')
 	{
 		if (!(all_type.str) && flags.flag_point == FALSE)
 			return (ft_putstr("(null)"));
 		return (ft_putstr(all_type.str));
 	}
-	if (type == 'S')
+	if (flags.type == 'S')
 	{
 		if (!(all_type.wstr) && flags.flag_point == FALSE)
 			return (ft_putstr("(null)"));
@@ -38,16 +38,19 @@ int		ft_print_txt(t_type all_type, t_params flags, char type)
 	return (0);
 }
 
-int		ft_print_conv(char *base, uintmax_t ud, t_params flags, char type)
+int		ft_print_conv(char *base, uintmax_t ud, t_params flags)
 {
 	int ret;
 
-	if (flags.flag_hashtag == TRUE && type == 'o' && ud == 0)
+	ret = 0;
+	if (flags.flag_hashtag == 2 && ud == 0 && flags.flag_point)
+		return (0);
+	if (flags.flag_hashtag == TRUE && flags.type == 'o' && ud == 0)
 		return (0);
 	if (flags.flag_point > 0 && ud == 0 && flags.size_width == -1)
-			return (ft_putchar(' '));
+		return (ft_putchar(' '));
 	if (flags.flag_point > 0 && ud == 0)
-			return (0);
+		return (0);
 	if (ft_strchr("jlzL", flags.size_type))
 		ret = ft_put_uintmax_base(ud, base);
 	else
@@ -55,9 +58,9 @@ int		ft_print_conv(char *base, uintmax_t ud, t_params flags, char type)
 	return (ret);
 }
 
-int		ft_print_int(t_type all_type, t_params flags, char type, int ret)
+int		ft_print_int(t_type all_type, t_params flags, int ret)
 {
-	if (type == 'd' || type == 'i')
+	if (flags.type == 'd' || flags.type == 'i')
 	{
 		if (flags.flag_point == TRUE && all_type.d == 0)
 			return (0);
@@ -67,34 +70,31 @@ int		ft_print_int(t_type all_type, t_params flags, char type, int ret)
 			ft_put_uintmax(FT_ABS(all_type.d));
 		ret = ft_imaxlen(all_type.d);
 	}
-	else if (type == 'u')
+	else if (flags.type == 'u')
 	{
 		if (flags.flag_point > 0 && all_type.ud == 0)
 			return (0);
 		ret = ft_put_uintmax_base(all_type.ud, "0123456789");
 	}
-	else if (type == 'o')
-		ret = ft_print_conv("01234567", all_type.ud, flags, type);
-	else if (type == 'x')
-		ret = ft_print_conv("0123456789abcdef", all_type.ud, flags, type);
-	else if (type == 'X')
-		ret = ft_print_conv("0123456789ABCDEF", all_type.ud, flags, type);
+	else if (flags.type == 'o')
+		ret = ft_print_conv("01234567", all_type.ud, flags);
+	else if (flags.type == 'x')
+		ret = ft_print_conv("0123456789abcdef", all_type.ud, flags);
+	else if (flags.type == 'X')
+		ret = ft_print_conv("0123456789ABCDEF", all_type.ud, flags);
 	return (ret);
 }
 
-int		ft_print_arg(t_type all_type, t_params flags, char type, int save)
+int		ft_print_arg(t_type all_type, t_params flags)
 {
 	int ret;
 
 	ret = 0;
-	if (type == 'x' && flags.flag_hashtag == 2 && all_type.ud == 0
-		&& flags.flag_point && save >= 1)
-		return (0);
-	if (type == '%')
+	if (flags.type == '%')
 		return (ft_putchar('%'));
-	if (ft_strchr("cCsS", type))
-		ret = ft_print_txt(all_type, flags, type);
-	else if (ft_strchr("diouxX", type))
-		ret = ft_print_int(all_type, flags, type, 0);
+	if (ft_strchr("cCsS", flags.type))
+		ret = ft_print_txt(all_type, flags);
+	if (ft_strchr("diouxX", flags.type))
+		ret = ft_print_int(all_type, flags, 0);
 	return (ret);
 }

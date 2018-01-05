@@ -13,10 +13,10 @@
 
 #include "libft.h"
 
-int 	ft_putnbr_base(int nbr, char *base, int sign)
+int		ft_putnbr_base(int nbr, char *base, int sign)
 {
-	char *str;
-	int ret;
+	char	*str;
+	int		ret;
 
 	str = ft_itoa_base(nbr, base);
 	if (sign == 0 && str[0] == '-')

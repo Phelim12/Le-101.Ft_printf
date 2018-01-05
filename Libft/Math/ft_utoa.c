@@ -15,9 +15,9 @@
 
 char	*ft_utoa(unsigned int n)
 {
-	unsigned int s_n;
-	char		 *ret;
-	int			 len;
+	unsigned int	s_n;
+	char			*ret;
+	int				len;
 
 	len = ft_ulen(n);
 	ret = ft_strnew(len);

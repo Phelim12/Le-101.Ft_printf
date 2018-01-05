@@ -43,6 +43,5 @@ t_params	reset_params(int *ptr1, int *ptr2, int first)
 	ret.flag_less = 0;
 	ret.flag_more = 0;
 	ret.size_type = 0;
-	ret.new_type = 0;
 	return (ret);
 }

@@ -46,7 +46,7 @@ STR =	ft_strcat.c ft_strcmp.c ft_strdup.c ft_striteri.c ft_strlen.c \
 		ft_strchr.c ft_strcpy.c ft_strequ.c ft_strjoin.c ft_strmap.c \
 		ft_strncmp.c ft_strnew.c ft_strrev.c ft_strsub.c ft_wstrsub.c \
 		ft_strclr.c ft_strdel.c ft_striter.c ft_strlcat.c ft_strmapi.c \
-		ft_strncpy.c ft_strnstr.c ft_strsplit.c ft_strtrim.c 
+		ft_strncpy.c ft_strnstr.c ft_strsplit.c ft_strtrim.c ft_wstrlen.c
 
 MATH =	ft_atoi.c ft_atou.c ft_ilen.c ft_imaxlen.c ft_imaxtoa.c ft_next_sqrt.c\
 		ft_ulen.c ft_umaxlen.c ft_umaxtoa.c ft_atoimax.c ft_atoumax.c ft_utoa.c\

@@ -106,9 +106,9 @@ int				ft_utf8_4(wchar_t w, int fd);
 int				ft_putchar_fd(wchar_t w, int fd);
 void			ft_putstr_fd(const char *s, int fd);
 void			ft_putendl_fd(const char *s, int fd);
-int 			ft_putnbr_base(int nbr, char *base, int sign);
+int				ft_putnbr_base(int nbr, char *base, int sign);
 int				ft_put_uint_base(unsigned int nbr, char *base);
-int 			ft_put_intmax_base(intmax_t nbr, char *base, int sign);
+int				ft_put_intmax_base(intmax_t nbr, char *base, int sign);
 int				ft_put_uintmax_base(uintmax_t nbr, char *base);
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -150,6 +150,7 @@ void			ft_strdel(char **as);
 char			*ft_strrev(char *str);
 char			*ft_strnew(size_t size);
 int				ft_strlen(const char *s);
+int				ft_wstrlen(wchar_t *wstr);
 char			*ft_strdup(const char *s);
 char			*ft_strtrim(const char *s);
 char			*ft_strchr(const char *s, int c);

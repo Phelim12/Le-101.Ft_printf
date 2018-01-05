@@ -13,27 +13,25 @@
 
 #include "ft_printf.h"
 
-int		ft_wstrlen(wchar_t *wstr)
+int		ft_len_str(t_type all_type, t_params flags)
 {
-	int cur;
-	int ret;
-
-	ret = 0;
-	cur = 0;
-	while (wstr[cur])
-	{
-		ret += ft_size_wchar(wstr[cur]);
-		cur++;
-	}
-	return (ret);
+	if (flags.type == 's' && all_type.str)
+		return (ft_strlen(all_type.str));
+	if (flags.type == 's' && !(all_type.str))
+		return (6);
+	if (flags.type == 'S' && all_type.wstr)
+		return (ft_wstrlen(all_type.wstr));
+	if (flags.type == 'S' && !(all_type.wstr))
+		return (6);
+	return (0);
 }
 
-int		ft_len_precision(t_type all_type, t_params flags, char type)
+int		ft_len_precision(t_type all_type, t_params flags)
 {
 	int ret;
 
 	ret = 0;
-	if (!(ft_strchr("diouxX", type)))
+	if (!(ft_strchr("diouxX", flags.type)))
 		return (0);
 	flags.size_precision -= flags.len_arg;
 	if (flags.flag_more == TRUE || all_type.d < 0)
@@ -43,14 +41,14 @@ int		ft_len_precision(t_type all_type, t_params flags, char type)
 	return (ret);
 }
 
-int		ft_size_prefix(t_type all_type, t_params flags, char type)
+int		ft_size_prefix(t_type all_type, t_params flags)
 {
-	if (type == '%')
+	if (flags.type == '%')
 		return (1);
-	if ((type == 'X' || type == 'x') && flags.flag_hashtag > 0 &&
+	if ((flags.type == 'X' || flags.type == 'x') && flags.flag_hashtag > 0 &&
 		(flags.size_precision < 1 || flags.flag_hashtag == 2))
 		return (2);
-	if ((((type == 'O' || type == 'o') && flags.flag_hashtag == TRUE)))
+	if ((((flags.type == 'O' || flags.type == 'o') && flags.flag_hashtag)))
 		return (1);
 	if ((flags.flag_more == TRUE || all_type.d < 0))
 		return (1);
@@ -61,44 +59,42 @@ int		ft_size_prefix(t_type all_type, t_params flags, char type)
 	return (0);
 }
 
-int		ft_len_conv(t_type all_type, t_params flags, char type)
+int		ft_len_conv(t_type all_type, t_params flags)
 {
-	if (flags.size_type == 'H' && (type == 'x' || type == 'X'))
+	if (flags.size_type == 'H' && (flags.type == 'x' || flags.type == 'X'))
 		return (ft_imaxlen_base(all_type.c, 16));
-	if (flags.size_type == 'H' && (type == 'o' || type == 'O'))
+	if (flags.size_type == 'H' && (flags.type == 'o' || flags.type == 'O'))
 		return (ft_imaxlen_base(all_type.c, 8));
-	if ((type == 'x' || type == 'X') && flags.flag_hashtag != 2)
+	if ((flags.type == 'x' || flags.type == 'X') && flags.flag_hashtag != 2)
 		return (ft_umaxlen_base(all_type.ud, 16));
-	if (type == 'o' || type == 'O')
+	if (flags.type == 'o' || flags.type == 'O')
 		return (ft_umaxlen_base(all_type.ud, 8));
 	if (flags.flag_hashtag == 2)
 		return (ft_umaxlen_base(all_type.ud, 16));
 	return (0);
 }
 
-int		ft_len_arg(t_type all_type, t_params flags, char type)
+int		ft_len_arg(t_type all_type, t_params flags)
 {
 	int prefix;
 
-	if (type == 'x' && flags.flag_hashtag == 2 && all_type.ud == 0
+	if (flags.type == 'x' && flags.flag_hashtag == 2 && all_type.ud == 0
 		&& flags.flag_point && flags.size_precision >= 1)
 		return (0);
-	prefix = ft_size_prefix(all_type, flags, type);
-	if (type == 'S' && all_type.wstr)
-		return (ft_wstrlen(all_type.wstr));
-	if (type == 's' && all_type.str)
-		return (ft_strlen(all_type.str));
-	if (type == 'c' || type == 'C')
+	prefix = ft_size_prefix(all_type, flags);
+	if (ft_strchr("sS", flags.type))
+		return (ft_len_str(all_type, flags));
+	if (flags.type == 'c' || flags.type == 'C')
 		return (1);
-	if (ft_strchr("OoXx", type))
-		return ((ft_len_conv(all_type, flags, type)) + prefix);
-	if (ft_strchr("Ddi", type) && flags.flag_point && !(all_type.d))
+	if (ft_strchr("OoXx", flags.type))
+		return ((ft_len_conv(all_type, flags)) + prefix);
+	if (ft_strchr("Ddi", flags.type) && flags.flag_point && !(all_type.d))
 		return (0);
-	if (ft_strchr("Ddi", type))
+	if (ft_strchr("Ddi", flags.type))
 		return (ft_imaxlen(all_type.d) + prefix);
-	if (type == 'U' || type == 'u')
+	if (flags.type == 'U' || flags.type == 'u')
 		return (ft_umaxlen(all_type.ud));
-	if (!(ft_strchr(PRINTF_TYPE, type)) && type)
+	if (!(ft_strchr(PRINTF_TYPE, flags.type)) && flags.type)
 		return (1);
 	else
 		return (prefix);

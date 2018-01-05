@@ -13,12 +13,12 @@
 
 #include "ft_printf.h"
 
-int		ft_print_precision(t_type *all_type, t_params *flags, char type)
+int		ft_print_precision(t_type *all_type, t_params *flags)
 {
 	int ret;
 
 	ret = 0;
-	if (!(ft_strchr("diouxX", type)))
+	if (!(ft_strchr("diouxX", flags->type)))
 		return (0);
 	flags->size_precision -= flags->len_arg;
 	if (flags->flag_hashtag == 2 && all_type->ud != 0)
@@ -31,13 +31,13 @@ int		ft_print_precision(t_type *all_type, t_params *flags, char type)
 	return (ret);
 }
 
-int		ft_print_sign(t_type all_type, t_params *flags, char type)
+int		ft_print_sign(t_type all_type, t_params *flags)
 {
 	char sign;
 
 	if (flags->print_sign == FALSE)
 		return (0);
-	if (type == 'd' || type == 'i')
+	if (flags->type == 'd' || flags->type == 'i')
 	{
 		if (all_type.d >= 0)
 			sign = '+';
@@ -49,9 +49,9 @@ int		ft_print_sign(t_type all_type, t_params *flags, char type)
 	return (0);
 }
 
-int		ft_print_prefix(t_type a, t_params *flags, char type)
+int		ft_print_prefix(t_type a, t_params *flags)
 {
-	if (flags->print_prefix == 0 || !(ft_strchr("poxX", type)))
+	if (flags->print_prefix == 0 || !(ft_strchr("poxX", flags->type)))
 		return (0);
 	if (flags->flag_hashtag > 0)
 	{
@@ -61,24 +61,24 @@ int		ft_print_prefix(t_type a, t_params *flags, char type)
 			return (0);
 		}
 		flags->print_prefix = 0;
-		if (type == 'X' && a.ud > 0)
+		if (flags->type == 'X' && a.ud > 0)
 			return (ft_putstr("0X"));
-		if ((type == 'x' && a.ud > 0) || flags->flag_hashtag == 2)
+		if ((flags->type == 'x' && a.ud > 0) || flags->flag_hashtag == 2)
 			return (ft_putstr("0x"));
-		if (type == 'o' && (a.ud > 0 || flags->flag_hashtag == TRUE))
+		if (flags->type == 'o' && (a.ud > 0 || flags->flag_hashtag == TRUE))
 			return (ft_putchar('0'));
 	}
 	flags->print_prefix = 0;
 	return (0);
 }
 
-int		ft_print_width(t_type all_type, t_params *flags, char type)
+int		ft_print_width(t_type all_type, t_params *flags)
 {
 	int ret;
 
 	ret = 0;
 	if (flags->flag_less == FALSE)
-		flags->size_width -= ft_modify_width(all_type, *flags, type);
+		flags->size_width -= ft_modify_width(all_type, *flags);
 	while (flags->flag_less == FALSE && flags->size_width-- > 0)
 	{
 		if (flags->flag_zero == TRUE)
@@ -94,31 +94,23 @@ int		ft_print_width(t_type all_type, t_params *flags, char type)
 	return (ret);
 }
 
-int		ft_print_flags(t_type all_type, t_params flags, char type)
+int		ft_print_params(va_list ap, t_params flags)
 {
-	int ret;
-	int save;
+	t_type	all_type;
+	int		ret;
 
 	ret = 0;
-	save = flags.size_precision;
-	ret += ft_check_sign(all_type, &flags, type, 1);
-	ret += ft_print_prefix(all_type, &flags, type);
-	ret += ft_print_width(all_type, &flags, type);
-	ret += ft_print_prefix(all_type, &flags, type);
-	ret += ft_check_sign(all_type, &flags, type, 0);
-	ret += ft_print_precision(&all_type, &flags, type);
-	ret += ft_print_arg(all_type, flags, type, save);
-	ret += ft_print_width(all_type, &flags, type);
-	return (ret);
-}
-
-int		ft_print_params(va_list ap, t_params flags, char type)
-{
-	t_type all_type;
-
 	reset_all_type(&all_type);
-	ft_search_arg(ap, &all_type, &flags, &type);
-	if (ft_strchr("sS", type))
-		ft_modify_string(&all_type, &flags, type);
-	return (ft_print_flags(all_type, flags, type));
+	ft_search_arg(ap, &all_type, &flags);
+	if (ft_strchr("sS", flags.type))
+		ft_modify_string(&all_type, &flags);
+	ret += ft_check_sign(all_type, &flags, 1);
+	ret += ft_print_prefix(all_type, &flags);
+	ret += ft_print_width(all_type, &flags);
+	ret += ft_print_prefix(all_type, &flags);
+	ret += ft_check_sign(all_type, &flags, 0);
+	ret += ft_print_precision(&all_type, &flags);
+	ret += ft_print_arg(all_type, flags);
+	ret += ft_print_width(all_type, &flags);
+	return (ret);
 }

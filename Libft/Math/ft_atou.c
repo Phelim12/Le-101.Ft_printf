@@ -5,12 +5,12 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/01/04 14:54:56 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/04 14:54:56 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/05 17:10:37 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/05 17:10:37 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
- 
+
 #include "libft.h"
 
 unsigned int	ft_atou(const char *s)

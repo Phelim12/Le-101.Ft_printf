@@ -15,8 +15,8 @@
 
 int		ft_put_uintmax_base(uintmax_t nbr, char *base)
 {
-	char *str;
-	int ret;
+	char	*str;
+	int		ret;
 
 	str = ft_umaxtoa_base(nbr, base);
 	ret = ft_putstr(str);

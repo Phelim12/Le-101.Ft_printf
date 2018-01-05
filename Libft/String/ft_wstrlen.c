@@ -1,26 +1,29 @@
-
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   test.c                                           .::    .:/ .      .::   */
+/*   ft_wstrlen.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/21 20:26:33 by clcreuso     #+#   ##    ##    #+#       */
-/*   Updated: 2017/12/21 20:26:33 by clcreuso    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/05 18:34:07 by clcreuso     #+#   ##    ##    #+#       */
+/*   Updated: 2018/01/05 18:34:07 by clcreuso    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "Sources/ft_printf.h"
-#include <limits.h>
-#include <locale.h>
+#include "libft.h"
 
-int main(int argc, char const *argv[])
+int		ft_wstrlen(wchar_t *wstr)
 {
-	setlocale(LC_ALL, "en_US.UTF-8");
-	//char c;
+	int cur;
+	int ret;
 
-	ft_printf("%x\n", 505);
-	return 0;
+	ret = 0;
+	cur = 0;
+	while (wstr[cur])
+	{
+		ret += ft_size_wchar(wstr[cur]);
+		cur++;
+	}
+	return (ret);
 }
