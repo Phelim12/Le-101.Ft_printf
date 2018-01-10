@@ -21,7 +21,7 @@ NAME = libftprintf.a
 
 DIR_LIB = Libft
 
-DIR_HEAD = Includes
+DIR_INC = Includes
 
 DIR_SRC = Sources
 
@@ -42,7 +42,7 @@ $(NAME): $(OBJS)
 
 $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
 	@mkdir -p $(DIR_OBJ)
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $< -I $(DIR_INC)
 	@echo "\033[0;32m✅️    $@ created."
 
 clean:
