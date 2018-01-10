@@ -18,7 +18,7 @@ int		ft_print_txt(t_type all_type, t_params flags)
 	if (flags.type == 'c')
 	{
 		if (ft_isascii(all_type.c))
-			return (ft_putchar(all_type.c));
+			return (ft_putwchar(all_type.c));
 		return (write(1, &all_type.c, 1));
 	}
 	if (flags.type == 'C')
