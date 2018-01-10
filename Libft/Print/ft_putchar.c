@@ -13,15 +13,8 @@
 
 #include "libft.h"
 
-int		ft_putchar(wchar_t w)
+int		ft_putchar(char c)
 {
-	if (w >= 0 && w <= 127)
-		return (ft_utf8_1(w, 1));
-	else if (w >= 128 && w <= 2047)
-		return (ft_utf8_2(w, 1));
-	else if (w >= 2048 && w <= 65535)
-		return (ft_utf8_3(w, 1));
-	else if (w >= 65536 && w <= 2097151)
-		return (ft_utf8_4(w, 1));
-	return (0);
+	write(1, &c, 1);
+	return (1);
 }

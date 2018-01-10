@@ -39,7 +39,7 @@ PUT =	ft_putnbr.c ft_put_uint.c ft_putchar.c ft_putendl.c ft_putnbr_fd.c \
 		ft_putstr_fd.c ft_utf8_2.c ft_utf8_4.c ft_put_intmax.c ft_put_uintmax.c\
 		ft_putchar_fd.c ft_putendl_fd.c ft_putstr.c ft_utf8_1.c ft_putnbr_base.c\
 		ft_put_uintmax.c ft_put_intmax_base.c ft_utf8_3.c ft_put_uintmax_base.c\
-		ft_put_uint_base.c ft_putwstr.c
+		ft_put_uint_base.c ft_putwstr.c ft_putwchar_fd.c ft_putwchar.c
 
 STR =	ft_strcat.c ft_strcmp.c ft_strdup.c ft_striteri.c ft_strlen.c \
 		ft_strncat.c ft_strnequ.c ft_strrchr.c ft_strstr.c ft_wstrncpy.c\

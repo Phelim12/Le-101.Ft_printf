@@ -90,8 +90,10 @@ char			*ft_utoa_base(unsigned int nbr, char *base);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+
 void			ft_putnbr(int n);
 int				ft_putchar(wchar_t w);
+int				ft_putwchar(wchar_t w);
 int				ft_putstr(const char *s);
 void			ft_putendl(const char *s);
 void			ft_put_intmax(intmax_t n);
@@ -104,6 +106,7 @@ int				ft_utf8_2(wchar_t w, int fd);
 int				ft_utf8_3(wchar_t w, int fd);
 int				ft_utf8_4(wchar_t w, int fd);
 int				ft_putchar_fd(wchar_t w, int fd);
+int				ft_putwchar_fd(wchar_t w, int fd);
 void			ft_putstr_fd(const char *s, int fd);
 void			ft_putendl_fd(const char *s, int fd);
 int				ft_putnbr_base(int nbr, char *base, int sign);

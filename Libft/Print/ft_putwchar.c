@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_putchar_fd.c                                  .::    .:/ .      .::   */
+/*   ft_putwchar.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
@@ -13,8 +13,15 @@
 
 #include "libft.h"
 
-int		ft_putchar_fd(char c, int fd)
+int		ft_putwchar(wchar_t w)
 {
-	write(fd, &c, 1);
-	return (1);
+	if (w >= 0 && w <= 127)
+		return (ft_utf8_1(w, 1));
+	else if (w >= 128 && w <= 2047)
+		return (ft_utf8_2(w, 1));
+	else if (w >= 2048 && w <= 65535)
+		return (ft_utf8_3(w, 1));
+	else if (w >= 65536 && w <= 2097151)
+		return (ft_utf8_4(w, 1));
+	return (0);
 }
