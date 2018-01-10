@@ -27,7 +27,7 @@ int		ft_print_txt(t_type all_type, t_params flags)
 	{
 		if (!(all_type.str) && flags.flag_point == FALSE)
 			return (ft_putwstr("(null)"));
-		return (ft_putwstr(all_type.str));
+		return (ft_putstr(all_type.str));
 	}
 	if (flags.type == 'S')
 	{
