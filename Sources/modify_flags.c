@@ -34,6 +34,12 @@ void	ft_modify_string(t_type *all_type, t_params *flags)
 			all_type->wstr = ft_wstrsub(all_type->wstr, 0, 0);
 		flags->len_arg = ft_wstrlen(all_type->wstr);
 	}
+	if (flags->type == 's' && all_type->str && ft_strlen(all_type->str) == 0 &&
+		flags->flag_space == TRUE)
+		flags->size_width--;
+	if (flags->type == 'S' && all_type->wstr && !(ft_wstrlen(all_type->wstr)) &&
+		flags->flag_space == TRUE)
+		flags->size_width--;
 }
 
 int		ft_check_sign(t_type all_type, t_params *flags, int first)
@@ -60,7 +66,8 @@ int		ft_modify_width(t_type all_type, t_params flags)
 
 	width = flags.size_width;
 	precision = flags.size_precision;
-	if (flags.flag_space == TRUE && flags.flag_point == TRUE && width > 0)
+	if (flags.flag_space == TRUE && flags.flag_point == TRUE &&
+		width > 0 && width <= precision)
 		return (width - 1);
 	if (ft_strchr("sS", flags.type) && (!(all_type.str) && !(all_type.wstr)) &&
 	flags.flag_zero == TRUE)
@@ -68,7 +75,11 @@ int		ft_modify_width(t_type all_type, t_params flags)
 	if ((width + flags.len_arg) <= precision && !(ft_strchr("sS", flags.type)))
 		return (width);
 	else if (ft_strchr("di", flags.type) && flags.len_arg < precision)
+	{
+		if (flags.flag_space == TRUE)
+			precision++;
 		return ((all_type.d < 0) ? (precision + 1) : (precision));
+	}
 	else
 		return (flags.len_arg + (ft_len_precision(all_type, flags)));
 }

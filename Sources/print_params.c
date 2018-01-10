@@ -102,10 +102,13 @@ int		ft_print_params(va_list ap, t_params flags)
 	ret = 0;
 	reset_all_type(&all_type);
 	ft_search_arg(ap, &all_type, &flags);
+	if (flags.flag_space == TRUE && flags.flag_point <= 1)
+		flags.size_width++;
+	if (all_type.d == 0 && flags.type == 'd' && flags.flag_zero &&
+		!(flags.flag_more))
+		flags.size_width--;
 	if (ft_strchr("sS", flags.type))
 		ft_modify_string(&all_type, &flags);
-	if (flags.flag_space == TRUE)
-		flags.size_width++;
 	ret += ft_check_sign(all_type, &flags, 1);
 	ret += ft_print_prefix(all_type, &flags);
 	ret += ft_print_width(all_type, &flags);

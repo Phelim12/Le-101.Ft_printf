@@ -22,7 +22,7 @@ int		ft_print_txt(t_type all_type, t_params flags)
 		return (write(1, &all_type.c, 1));
 	}
 	if (flags.type == 'C')
-		return (ft_putchar(all_type.wc));
+		return (ft_putwchar(all_type.wc));
 	if (flags.type == 's')
 	{
 		if (!(all_type.str) && flags.flag_point == FALSE)

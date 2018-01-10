@@ -22,7 +22,7 @@ int		ft_putwstr(wchar_t *wstr)
 	cur = 0;
 	while (wstr[cur])
 	{
-		ret += ft_putchar(wstr[cur]);
+		ret += ft_putwchar(wstr[cur]);
 		cur++;
 	}
 	return (ret);

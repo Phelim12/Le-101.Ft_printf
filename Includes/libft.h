@@ -90,7 +90,6 @@ char			*ft_utoa_base(unsigned int nbr, char *base);
 **┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
-
 void			ft_putnbr(int n);
 int				ft_putchar(wchar_t w);
 int				ft_putwchar(wchar_t w);
