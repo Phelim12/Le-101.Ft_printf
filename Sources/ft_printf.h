@@ -18,8 +18,8 @@
 # include <stdarg.h>
 # include "../Includes/libft.h"
 
-# define PRINTF_TYPE "sSpdDioOuUxXcC%"
-# define PRINTF_SPECS "#0-+ *123456789.hljz"
+# define PRINTF_TYPE "sSpdDioOuUxXcCeEfFgGaAn%"
+# define PRINTF_SPECS "#0-+ *123456789.hljz$L’'"
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
