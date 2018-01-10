@@ -26,13 +26,13 @@ int		ft_print_txt(t_type all_type, t_params flags)
 	if (flags.type == 's')
 	{
 		if (!(all_type.str) && flags.flag_point == FALSE)
-			return (ft_putstr("(null)"));
-		return (ft_putstr(all_type.str));
+			return (ft_putwstr("(null)"));
+		return (ft_putwstr(all_type.str));
 	}
 	if (flags.type == 'S')
 	{
 		if (!(all_type.wstr) && flags.flag_point == FALSE)
-			return (ft_putstr("(null)"));
+			return (ft_putwstr("(null)"));
 		return (ft_putwstr(all_type.wstr));
 	}
 	return (0);
