@@ -60,6 +60,8 @@ int		ft_modify_width(t_type all_type, t_params flags)
 
 	width = flags.size_width;
 	precision = flags.size_precision;
+	if (flags.flag_space == TRUE && flags.flag_point == TRUE && width > 0)
+		return (width - 1);
 	if (ft_strchr("sS", flags.type) && (!(all_type.str) && !(all_type.wstr)) &&
 	flags.flag_zero == TRUE)
 		return (0);
