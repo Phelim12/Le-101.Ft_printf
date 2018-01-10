@@ -6,7 +6,7 @@
 #    By: clcreuso <clcreuso@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 22:08:57 by clcreuso     #+#   ##    ##    #+#        #
-#    Updated: 2017/11/24 22:08:57 by clcreuso    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/01/10 15:48:15 by clcreuso    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -36,7 +36,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@make -C $(DIR_LIB)
-	@cp libft/libft.a ./$(NAME)
+	@cp ./Libft/libft.a ./$(NAME)
 	@ar -rcs $(NAME) $(OBJS)
 	@echo "\033[0;32m✅️    $(NAME) created."
 
