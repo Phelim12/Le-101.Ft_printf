@@ -17,7 +17,9 @@ int		ft_putwchar(wchar_t w)
 {
 	if (w >= 0 && w <= 127)
 		return (ft_utf8_1(w, 1));
-	else if (w >= 128 && w <= 2047)
+	else if (w >= 128 && w <= 255)
+		return (write(1, &w, 1));
+	else if (w >= 256 && w <= 2047)
 		return (ft_utf8_2(w, 1));
 	else if (w >= 2048 && w <= 65535)
 		return (ft_utf8_3(w, 1));
