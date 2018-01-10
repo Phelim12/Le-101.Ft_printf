@@ -104,6 +104,8 @@ int		ft_print_params(va_list ap, t_params flags)
 	ft_search_arg(ap, &all_type, &flags);
 	if (ft_strchr("sS", flags.type))
 		ft_modify_string(&all_type, &flags);
+	if (flags.flag_space == TRUE)
+		flags.size_width++;
 	ret += ft_check_sign(all_type, &flags, 1);
 	ret += ft_print_prefix(all_type, &flags);
 	ret += ft_print_width(all_type, &flags);
