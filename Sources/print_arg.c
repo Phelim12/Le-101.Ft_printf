@@ -18,21 +18,21 @@ int		ft_print_txt(t_type all_type, t_params flags)
 	if (flags.type == 'c')
 	{
 		if (ft_isascii(all_type.c))
-			return (ft_putwchar(all_type.c));
-		return (write(1, &all_type.c, 1));
+			return (ft_putchar(all_type.c));
+		return (ft_putwchar(all_type.c));
 	}
 	if (flags.type == 'C')
 		return (ft_putwchar(all_type.wc));
 	if (flags.type == 's')
 	{
 		if (!(all_type.str) && flags.flag_point == FALSE)
-			return (ft_putwstr("(null)"));
+			return (ft_putstr("(null)"));
 		return (ft_putstr(all_type.str));
 	}
 	if (flags.type == 'S')
 	{
 		if (!(all_type.wstr) && flags.flag_point == FALSE)
-			return (ft_putwstr("(null)"));
+			return (ft_putstr("(null)"));
 		return (ft_putwstr(all_type.wstr));
 	}
 	return (0);
